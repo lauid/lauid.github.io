@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="PHP扩展（PECL）跟PHP引擎一样都是使用C语言开发。PHP核心开发组成员鸟哥Laruence使用的是VIM进行PHP开发。http://www.laruence.com/2011/09/13/2139.html书籍: http://www.walu.cc/phpbook/案例: php-src/extPECL开发邮件组: http://news.php.net/php.pecl.dev尽量编">
+<meta name="description" content="PHP提供了统一的迭代器接口：12345678910111213Iterator extends Traversable&amp;#123;	//返回当前元素	abstract public mixed current(void)	//返回当前元素的键	abstract public scalar key(void)	//向下移动到下一个元素	abstract public void next(void)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="php extension">
-<meta property="og:url" content="http://yoursite.com/2017/01/08/php-extension/index.html">
+<meta property="og:title" content="php迭代器和yield">
+<meta property="og:url" content="http://yoursite.com/2017/05/16/php迭代器/index.html">
 <meta property="og:site_name" content="laugh">
-<meta property="og:description" content="PHP扩展（PECL）跟PHP引擎一样都是使用C语言开发。PHP核心开发组成员鸟哥Laruence使用的是VIM进行PHP开发。http://www.laruence.com/2011/09/13/2139.html书籍: http://www.walu.cc/phpbook/案例: php-src/extPECL开发邮件组: http://news.php.net/php.pecl.dev尽量编">
-<meta property="og:updated_time" content="2017-01-10T15:11:14.000Z">
+<meta property="og:description" content="PHP提供了统一的迭代器接口：12345678910111213Iterator extends Traversable&amp;#123;	//返回当前元素	abstract public mixed current(void)	//返回当前元素的键	abstract public scalar key(void)	//向下移动到下一个元素	abstract public void next(void)">
+<meta property="og:updated_time" content="2017-05-16T16:08:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="php extension">
-<meta name="twitter:description" content="PHP扩展（PECL）跟PHP引擎一样都是使用C语言开发。PHP核心开发组成员鸟哥Laruence使用的是VIM进行PHP开发。http://www.laruence.com/2011/09/13/2139.html书籍: http://www.walu.cc/phpbook/案例: php-src/extPECL开发邮件组: http://news.php.net/php.pecl.dev尽量编">
+<meta name="twitter:title" content="php迭代器和yield">
+<meta name="twitter:description" content="PHP提供了统一的迭代器接口：12345678910111213Iterator extends Traversable&amp;#123;	//返回当前元素	abstract public mixed current(void)	//返回当前元素的键	abstract public scalar key(void)	//向下移动到下一个元素	abstract public void next(void)">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/08/php-extension/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/16/php迭代器/"/>
 
 
 
 
 
-  <title> php extension | laugh </title>
+  <title> php迭代器和yield | laugh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -250,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/08/php-extension/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/php迭代器/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="laugh">
@@ -274,7 +274,7 @@
             
             
               
-                php extension
+                php迭代器和yield
               
             
           </h1>
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-08T00:23:28+08:00">
-                2017-01-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-16T23:25:50+08:00">
+                2017-05-16
               </time>
             
 
@@ -308,8 +308,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/01/08/php-extension/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/08/php-extension/" itemprop="commentCount"></span>
+                <a href="/2017/05/16/php迭代器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/16/php迭代器/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -335,10 +335,11 @@
       
 
       
-        <p>PHP扩展（PECL）跟PHP引擎一样都是使用C语言开发。PHP核心开发组成员鸟哥Laruence使用的是VIM进行PHP开发。<br><a href="http://www.laruence.com/2011/09/13/2139.html" target="_blank" rel="external">http://www.laruence.com/2011/09/13/2139.html</a><br>书籍: <a href="http://www.walu.cc/phpbook/" target="_blank" rel="external">http://www.walu.cc/phpbook/</a><br>案例: php-src/ext<br>PECL开发邮件组: <a href="http://news.php.net/php.pecl.dev" target="_blank" rel="external">http://news.php.net/php.pecl.dev</a><br>尽量编写一些phpt测试用例,php-src/tests下有很多参考.<br>测试时用–enable-debug编译PHP,要做到执行你的扩展逻辑,不输出任何错误信息.<br>用valgrind检测内存泄露.<br><a id="more"></a></p>
-<p>PHP异步网络扩展Swoole作者博客： <a href="http://rango.swoole.com/" target="_blank" rel="external">http://rango.swoole.com/</a><br>PHP中文分词扩展SCWS和XunSearch全文搜索引擎作者博客： <a href="http://hightman.cn" target="_blank" rel="external">http://hightman.cn</a><br>PHP代码加密扩展php-beast作者博客：<a href="http://my.oschina.net/liexusong/blog" target="_blank" rel="external">http://my.oschina.net/liexusong/blog</a></p>
-<p>如果你在Linux上要使用IDE开发，可以看看Eclipse CDT或者<a href="http://my.oschina.net/eechen/blog/166969" target="_blank" rel="external">Qt Creator</a>。</p>
-<p>构建PHP扩展:<br><a href="http://wiki.swoole.com/wiki/page/238.html" target="_blank" rel="external">http://wiki.swoole.com/wiki/page/238.html</a> (视频教程)<br><a href="http://php.net/manual/zh/internals2.buildsys.php" target="_blank" rel="external">http://php.net/manual/zh/internals2.buildsys.php</a><br>php-src/ext/ext_skel脚本用于生成PECL扩展源码骨架.</p>
+        <p>PHP提供了统一的迭代器接口：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Iterator extends Traversable</div><div class="line">&#123;</div><div class="line">	<span class="comment">//返回当前元素</span></div><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> mixed current(void)</div><div class="line">	<span class="comment">//返回当前元素的键</span></div><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> scalar key(void)</div><div class="line">	<span class="comment">//向下移动到下一个元素</span></div><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> void next(void)</div><div class="line">	<span class="comment">//返回到迭代器的第一个元素</span></div><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> void remind(void)</div><div class="line">	<span class="comment">//检查当前位置是否有效</span></div><div class="line">	<span class="keyword">abstract</span> <span class="keyword">public</span> boolean valid(void)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>通过<strong>Iterator接口</strong>, 我们可以自行实现,来观察迭代器的调用顺序.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyIterator</span> <span class="keyword">implements</span> <span class="title">Iterator</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">private</span> $position = <span class="number">0</span>;</div><div class="line">	<span class="keyword">private</span> $arr = <span class="keyword">array</span>(</div><div class="line">		<span class="string">'first'</span>, <span class="string">'second'</span>, <span class="string">'third'</span>,</div><div class="line">	);</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">$this</span>-&gt;_position = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">rewind</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">		<span class="keyword">$this</span>-&gt;_position = <span class="number">0</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">current</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">		<span class="keyword">return</span> <span class="keyword">$this</span>-&gt;arr[ <span class="keyword">$this</span>-&gt;_position ];</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">key</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">		<span class="keyword">return</span> <span class="keyword">$this</span>-&gt;position;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">next</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">		++<span class="keyword">$this</span>-&gt;_position;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">valid</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		var_dump(<span class="keyword">__METHOD__</span>);</div><div class="line">		<span class="keyword">return</span> <span class="keyword">isset</span>( <span class="keyword">$this</span>-&gt;arr[ <span class="keyword">$this</span>-&gt;_position ] );</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	$it = <span class="keyword">new</span> MyIterator();</div><div class="line">	<span class="keyword">foreach</span>( $it <span class="keyword">as</span> $key =&gt; $value )</div><div class="line">	&#123;</div><div class="line">		var_dump( $key , $value );</div><div class="line">		<span class="keyword">echo</span> PHP_EOL;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>php运行结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">string(18) &quot;MyIterator::rewind&quot;</div><div class="line">string(17) &quot;MyIterator::valid&quot;</div><div class="line">string(19) &quot;MyIterator::current&quot;</div><div class="line">string(15) &quot;MyIterator::key&quot;</div><div class="line">int(0)</div><div class="line">string(5) &quot;first&quot;</div><div class="line"></div><div class="line">string(16) &quot;MyIterator::next&quot;</div><div class="line">string(17) &quot;MyIterator::valid&quot;</div><div class="line">string(19) &quot;MyIterator::current&quot;</div><div class="line">string(15) &quot;MyIterator::key&quot;</div><div class="line">int(1)</div><div class="line">string(6) &quot;second&quot;</div><div class="line"></div><div class="line">string(16) &quot;MyIterator::next&quot;</div><div class="line">string(17) &quot;MyIterator::valid&quot;</div><div class="line">string(19) &quot;MyIterator::current&quot;</div><div class="line">string(15) &quot;MyIterator::key&quot;</div><div class="line">int(2)</div><div class="line">string(5) &quot;third&quot;</div><div class="line"></div><div class="line">string(16) &quot;MyIterator::next&quot;</div><div class="line">string(17) &quot;MyIterator::valid&quot;</div></pre></td></tr></table></figure></p>
+<p>通过这个例子能够清楚的看到了foreach循环中调用的顺序。从例子也能看出通过迭代器能够将一个普通的对象转化为一个可被遍历的对象。这在有些时候，能够将一个普通的UsersInfo对象转化为一个可以遍历的对象，那么就不需要通过UsersInfo::getAllUser()获取一个数组然后遍历数组，而且还可以在对象中对数据进行预处理。</p>
 
       
     </div>
@@ -371,8 +372,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/04/number-bit/" rel="next" title="number bit">
-                <i class="fa fa-chevron-left"></i> number bit
+              <a href="/2017/05/04/explain详解-md/" rel="next" title="explain详解.md">
+                <i class="fa fa-chevron-left"></i> explain详解.md
               </a>
             
           </div>
@@ -381,8 +382,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/01/10/note/" rel="prev" title="note">
-                note <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/17/php的yield和生成器/" rel="prev" title="php的yield和生成器">
+                php的yield和生成器 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -432,8 +433,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/01/08/php-extension/"
-           data-title="php extension" data-url="http://yoursite.com/2017/01/08/php-extension/">
+      <div class="ds-thread" data-thread-key="2017/05/16/php迭代器/"
+           data-title="php迭代器和yield" data-url="http://yoursite.com/2017/05/16/php迭代器/">
       </div>
     
   </div>
