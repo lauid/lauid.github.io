@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="nosql," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="LNMP，java，分布式，ELK...angular">
+<meta name="description" content="memcached是多线程，非阻塞IO复用的网络模型，分为监听主线程和worker子线程，监听线程监听网络连接，接受请求后，将连接描述字pipe传递给worker线程，进行读写IO，网络层使用libevent封装的事件库，多线程模型可以发挥多核作用，但是引入了cache coherency和锁的问题，比如：memcached最常用的stats命令，实际memcached所有操作都要对这个全局变量加">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一致性hash算法">
-<meta property="og:url" content="http://yoursite.com/2017/05/04/一致性hash算法/index.html">
+<meta property="og:title" content="redis和memcached">
+<meta property="og:url" content="http://yoursite.com/2017/05/18/redis和memcached/index.html">
 <meta property="og:site_name" content="laugh">
-<meta property="og:description" content="LNMP，java，分布式，ELK...angular">
-<meta property="og:updated_time" content="2017-05-04T15:14:30.000Z">
+<meta property="og:description" content="memcached是多线程，非阻塞IO复用的网络模型，分为监听主线程和worker子线程，监听线程监听网络连接，接受请求后，将连接描述字pipe传递给worker线程，进行读写IO，网络层使用libevent封装的事件库，多线程模型可以发挥多核作用，但是引入了cache coherency和锁的问题，比如：memcached最常用的stats命令，实际memcached所有操作都要对这个全局变量加">
+<meta property="og:updated_time" content="2017-05-18T14:52:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一致性hash算法">
-<meta name="twitter:description" content="LNMP，java，分布式，ELK...angular">
+<meta name="twitter:title" content="redis和memcached">
+<meta name="twitter:description" content="memcached是多线程，非阻塞IO复用的网络模型，分为监听主线程和worker子线程，监听线程监听网络连接，接受请求后，将连接描述字pipe传递给worker线程，进行读写IO，网络层使用libevent封装的事件库，多线程模型可以发挥多核作用，但是引入了cache coherency和锁的问题，比如：memcached最常用的stats命令，实际memcached所有操作都要对这个全局变量加">
 
 
 
@@ -121,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/04/一致性hash算法/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/18/redis和memcached/"/>
 
 
 
 
 
-  <title> 一致性hash算法 | laugh </title>
+  <title> redis和memcached | laugh </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="default">
@@ -250,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/04/一致性hash算法/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/18/redis和memcached/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="laugh">
@@ -274,7 +274,7 @@
             
             
               
-                一致性hash算法
+                redis和memcached
               
             
           </h1>
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-04T23:08:38+08:00">
-                2017-05-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-18T22:50:17+08:00">
+                2017-05-18
               </time>
             
 
@@ -308,8 +308,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/05/04/一致性hash算法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/04/一致性hash算法/" itemprop="commentCount"></span>
+                <a href="/2017/05/18/redis和memcached/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/18/redis和memcached/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -335,7 +335,10 @@
       
 
       
-        
+        <p>memcached是多线程，非阻塞IO复用的网络模型，分为监听主线程和worker子线程，监听线程监听网络连接，接受请求后，将连接描述字pipe传递给worker线程，进行读写IO，网络层使用libevent封装的事件库，多线程模型可以发挥多核作用，但是引入了cache coherency和锁的问题，比如：memcached最常用的stats命令，实际memcached所有操作都要对这个全局变量加锁，进行技术等工作，带来了性能损耗。</p>
+<p>redis使用单线程的IO复用模型，自己封装了一个简单的AeEvent事件处理框架，主要实现了epoll, kqueue和select，对于单存只有IO操作来说，单线程可以将速度优势发挥到最大，但是redis也提供了一些简单的计算功能，比如排序、聚合等，对于这些操作，单线程模型施加会严重影响整体吞吐量，CPU计算过程中，整个IO调度都是被阻塞的。</p>
+<p><em>参考</em><a href="http://blog.jobbole.com/101496/" target="_blank" rel="external">Redis 和 Memcached 的区别</a></p>
+
       
     </div>
 
@@ -356,13 +359,19 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/nosql/" rel="tag"># nosql</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/10/elasticsearch5-0升级问题/" rel="next" title="elasticsearch5.0升级问题">
-                <i class="fa fa-chevron-left"></i> elasticsearch5.0升级问题
+              <a href="/2017/05/17/策略模式/" rel="next" title="策略模式">
+                <i class="fa fa-chevron-left"></i> 策略模式
               </a>
             
           </div>
@@ -370,10 +379,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/04/面向对象设计的SOLID原则/" rel="prev" title="面向对象设计的SOLID原则">
-                面向对象设计的SOLID原则 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -422,8 +427,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/05/04/一致性hash算法/"
-           data-title="一致性hash算法" data-url="http://yoursite.com/2017/05/04/一致性hash算法/">
+      <div class="ds-thread" data-thread-key="2017/05/18/redis和memcached/"
+           data-title="redis和memcached" data-url="http://yoursite.com/2017/05/18/redis和memcached/">
       </div>
     
   </div>
