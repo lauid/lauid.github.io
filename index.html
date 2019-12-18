@@ -82,7 +82,7 @@
 <meta name="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Runnable">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://liugaohua.github.io/index.html">
 <meta property="og:site_name" content="Runnable">
 <meta property="og:description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
 <meta property="og:locale" content="zh-Hans">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://liugaohua.github.io/">
 
 
 
@@ -252,7 +252,383 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/hexo错误/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/04/elasticsearch-常用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/04/elasticsearch-常用/" itemprop="url">elasticsearch-常用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-04T09:57:54+08:00">
+                2019-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="分词测试"><a href="#分词测试" class="headerlink" title="分词测试"></a>分词测试</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET /goods_index/_analyze</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"analyzer"</span> : <span class="string">"icu_analyzer"</span>,</span><br><span class="line">  <span class="attr">"text"</span> : <span class="string">"Elasticsearch hello world"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="cmd只更新部分字段"><a href="#cmd只更新部分字段" class="headerlink" title="cmd只更新部分字段"></a>cmd只更新部分字段</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST /goods_index/_doc/103130673/_update</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"doc"</span>:&#123;</span><br><span class="line">        <span class="attr">"categoryIds"</span>: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/03/elastisearch-update-api更新部分字段内容/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/03/elastisearch-update-api更新部分字段内容/" itemprop="url">elastisearch-update-api更新部分字段内容</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-03T22:51:04+08:00">
+                2019-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/partial-updates.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/partial-updates.html</a><br>update 请求最简单的一种形式是接收文档的一部分作为 doc 的参数， 它只是与现有的文档进行合并。对象被合并到一起，覆盖现有的字段，增加新的字段。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST /website/blog/1/</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"title"</span>: <span class="string">"My first blog entry"</span>,</span><br><span class="line">  <span class="attr">"text"</span>:  <span class="string">"Just trying this out..."</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如，我们增加字段 tags 和 views 到我们的博客文章，如下所示：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST /website/blog/1/_update</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">"doc"</span> : &#123;</span><br><span class="line">      <span class="attr">"tags"</span> : [ <span class="string">"testing"</span> ],</span><br><span class="line">      <span class="attr">"views"</span>: <span class="number">0</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/03/elasticsearch-terms-execution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/03/elasticsearch-terms-execution/" itemprop="url">elasticsearch-terms-execution</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-03T22:33:55+08:00">
+                2019-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"terms"</span> : &#123; <span class="attr">"field_name"</span> : [<span class="string">"value1"</span>, <span class="string">"value2"</span>], <span class="attr">"execution"</span> : <span class="string">"bool"</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>“reason”: “[terms] query does not support [execution]”,<br>这种方式已经不支持了，目前只有用must没有找到更优雅的写法。</p>
+</blockquote>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">POST /goods_index/_search</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">"explain"</span>: <span class="literal">true</span>,</span><br><span class="line">   <span class="attr">"query"</span>: &#123;</span><br><span class="line">      <span class="attr">"bool"</span>: &#123;</span><br><span class="line">         <span class="attr">"filter"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">               <span class="attr">"bool"</span>: &#123;</span><br><span class="line">                  <span class="attr">"must"</span>: [</span><br><span class="line">                     &#123;</span><br><span class="line">                        <span class="attr">"term"</span>: &#123;</span><br><span class="line">                           <span class="attr">"categoryIds"</span>: &#123;</span><br><span class="line">                              <span class="attr">"value"</span>: <span class="number">1</span></span><br><span class="line">                           &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                     &#125;,</span><br><span class="line">                     &#123;</span><br><span class="line">                        <span class="attr">"term"</span>: &#123;</span><br><span class="line">                           <span class="attr">"categoryIds"</span>: &#123;</span><br><span class="line">                              <span class="attr">"value"</span>: <span class="number">2</span></span><br><span class="line">                           &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                     &#125;</span><br><span class="line">                  ]</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">         ]</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">POST /my_index/_search?pretty</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>: &#123;</span><br><span class="line">    <span class="attr">"terms"</span>: &#123;</span><br><span class="line">        <span class="attr">"color"</span> : &#123;</span><br><span class="line">            <span class="attr">"index"</span> : <span class="string">"my_index"</span>,</span><br><span class="line">            <span class="attr">"id"</span> : <span class="string">"3"</span>,</span><br><span class="line">            <span class="attr">"path"</span> : <span class="string">"color"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">POST /my_index/_search?pretty</span><br><span class="line">&#123;</span><br><span class="line">   <span class="attr">"query"</span>: &#123;</span><br><span class="line">      <span class="attr">"terms_set"</span>: &#123;</span><br><span class="line">         <span class="attr">"color"</span>: &#123;</span><br><span class="line">            <span class="attr">"terms"</span>: [</span><br><span class="line">               <span class="string">"green"</span>,</span><br><span class="line">               <span class="string">"blue"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"minimum_should_match_script"</span>: &#123;</span><br><span class="line">               <span class="attr">"source"</span>: <span class="string">"Math.min(params.num_terms, 4)"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"boost"</span>: <span class="number">1</span></span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ps. </p>
+<ul>
+<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.0/query-dsl-terms-set-query.html#terms-set-query-script" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/7.0/query-dsl-terms-set-query.html#terms-set-query-script</a></li>
+<li><a href="https://www.elastic.co/guide/cn/elasticsearch/guide/current/_finding_multiple_exact_values.html" target="_blank" rel="noopener">https://www.elastic.co/guide/cn/elasticsearch/guide/current/_finding_multiple_exact_values.html</a></li>
+<li><a href="https://discuss.elastic.co/t/is-there-an-alternative-solution-to-terms-execution-and-on-es-2-x/41089" target="_blank" rel="noopener">https://discuss.elastic.co/t/is-there-an-alternative-solution-to-terms-execution-and-on-es-2-x/41089</a></li>
+<li><a href="https://github.com/elastic/elasticsearch/issues/1568" target="_blank" rel="noopener">https://github.com/elastic/elasticsearch/issues/1568</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/11/19/hexo错误/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -380,7 +756,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/11/19/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -506,7 +882,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/29/kibana-nginx/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/08/29/kibana-nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -626,7 +1002,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/elasticsearch计算词频/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/07/23/elasticsearch计算词频/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -748,7 +1124,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/linux-tools/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/07/23/linux-tools/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -875,7 +1251,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/xhprof-php7/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/05/22/xhprof-php7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -997,7 +1373,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/20/mysql的innodb幻读问题/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/03/20/mysql的innodb幻读问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -1139,387 +1515,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/11/概率计算/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/11/概率计算/" itemprop="url">概率计算</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-11T09:56:40+08:00">
-                2019-01-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>算法一</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 全概率计算</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array $p array('a'=&gt;0.5,'b'=&gt;0.2,'c'=&gt;0.4)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> string 返回上面数组的key</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span><span class="params">($ps)</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> $arr = <span class="keyword">array</span>();</span><br><span class="line">    $key = md5(serialize($ps));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">isset</span>($arr[$key])) &#123;</span><br><span class="line">        $max = array_sum($ps);</span><br><span class="line">        <span class="keyword">foreach</span> ($ps <span class="keyword">as</span> $k=&gt;$v) &#123;</span><br><span class="line">            $v = $v / $max * <span class="number">10000</span>;</span><br><span class="line">            <span class="keyword">for</span> ($i=<span class="number">0</span>; $i&lt;$v; $i++) $arr[$key][] = $k;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $arr[$key][mt_rand(<span class="number">0</span>,count($arr[$key])<span class="number">-1</span>)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>算法二</li>
-</ul>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据权重概率获取</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> $weights [ &#123; k =&gt; weight &#125; ]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> int|string</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getRand</span><span class="params">( $weights )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	$result = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">	$weightSum = array_sum( $weights );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">foreach</span>( $weights <span class="keyword">as</span> $key =&gt; $weight )</span><br><span class="line">	&#123;</span><br><span class="line">		$randNum = mt_rand( <span class="number">1</span>, $weightSum );</span><br><span class="line">		<span class="keyword">if</span>( $randNum &lt;= $weight )</span><br><span class="line">		&#123;</span><br><span class="line">			$result = $key;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		$weightSum -= $weight;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> $result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/18/sprintBoot-headFirst/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/18/sprintBoot-headFirst/" itemprop="url">sprintBoot-headFirst</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-18T14:02:10+08:00">
-                2018-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://start.spring.io/" target="_blank" rel="noopener">https://start.spring.io/</a></p>
-<p>mvn clean install</p>
-<p>mvn spring-boot:run</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/redis原子性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/10/redis原子性/" itemprop="url">redis原子性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T17:30:17+08:00">
-                2018-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>ps.例</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">redis</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	$redis = <span class="keyword">new</span> Redis();</span><br><span class="line">	$redis-&gt;connect( <span class="string">'127.0.0.1'</span>, <span class="number">6379</span> );</span><br><span class="line">	$key = <span class="string">'testing'</span>;</span><br><span class="line">	<span class="keyword">for</span>( $i = <span class="number">0</span>; $i &lt; <span class="number">1000</span>; $i++ )</span><br><span class="line">	&#123;</span><br><span class="line">		$num = (int)$redis-&gt;get( $key );</span><br><span class="line">		$num++;</span><br><span class="line">		$redis-&gt;set( $key, $num );</span><br><span class="line">		usleep( <span class="number">1000</span> );</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>用两个终端执行上面的程序，发现val的结果是小于2000的值，那么可以知道，在程序中执行多个Redis命令并非是原子性的，这也和普通数据库的表现是一样的。<br><strong>如果想在上面的程序中实现原子性，可以将get和set改成单命令操作，比如incr，或者使用Redis的事务，或者使用Redis+Lua的方式实现。</strong></p>
-<p>对Redis来说，执行get、set以及eval等API，都是一个一个的任务，这些任务都会由Redis的线程去负责执行，任务要么执行成功，要么执行失败，这就是Redis的命令是原子性的原因。</p>
-<p>Redis本身提供的所有API都是原子操作，Redis中的事务其实是要保证批量操作的原子性。</p>
-<p>事务是一个原子操作：事务中的命令要么全部被执行，要么全部都不执行。 不支持回滚（roll back）</p>
-<p>ps.库存扣减实例<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$lua = <span class="string">&lt;&lt;&lt;EOF</span></span><br><span class="line"><span class="string">    local buyNum = ARGV[1]</span></span><br><span class="line"><span class="string">    local goodsKey = KEYS[1]  </span></span><br><span class="line"><span class="string">    local goodsNum = redis.call('get',goodsKey) </span></span><br><span class="line"><span class="string">    if goodsNum &gt;= buyNum</span></span><br><span class="line"><span class="string">        then redis.call('DECRBY',goodsKey,buyNum) </span></span><br><span class="line"><span class="string">        return buyNum </span></span><br><span class="line"><span class="string">    else </span></span><br><span class="line"><span class="string">        return '0'</span></span><br><span class="line"><span class="string">    end</span></span><br><span class="line"><span class="string">EOF;</span></span><br><span class="line">$redis = <span class="keyword">new</span> Redis();</span><br><span class="line">$redis-&gt;connect( <span class="string">'127.0.0.1'</span>, <span class="number">6379</span> );</span><br><span class="line">$goodsKey = <span class="string">'_goods_'</span>;</span><br><span class="line">$buyNum = <span class="number">1</span>;</span><br><span class="line">$redis-&gt;eval( $lua, [ $goodsKey, $buyNum ], <span class="number">1</span> );</span><br><span class="line">$redis-&gt;evalSha( sha1( $lua ), [ $goodsKey, $buyNum ], <span class="number">1</span> );</span><br><span class="line"><span class="keyword">echo</span> $redis-&gt;get( $goodsKey );</span><br></pre></td></tr></table></figure></p>
-<p>参考：</p>
-<p><a href="http://redisdoc.com/topic/transaction.html" target="_blank" rel="noopener">redis事务</a><br><a href="http://redisdoc.com/script/eval.html" target="_blank" rel="noopener">redis脚本</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1565,7 +1565,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1587,7 +1587,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
