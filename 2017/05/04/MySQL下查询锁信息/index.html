@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Runnable">
-<meta property="og:url" content="http://liugaohua.github.io/tags/tools/index.html">
+<meta name="description" content="MySQL下查询锁信息 SHOW PROCESSLIST;SHOW OPEN TABLES WHERE In_use &amp;gt; 0; #运行线程 SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’; #链接线程SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’; #查询数SHOW  GLOBAL  STATUS LIK">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql查询锁信息">
+<meta property="og:url" content="http://liugaohua.github.io/2017/05/04/MySQL下查询锁信息/index.html">
 <meta property="og:site_name" content="Runnable">
-<meta property="og:description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+<meta property="og:description" content="MySQL下查询锁信息 SHOW PROCESSLIST;SHOW OPEN TABLES WHERE In_use &amp;gt; 0; #运行线程 SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’; #链接线程SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’; #查询数SHOW  GLOBAL  STATUS LIK">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-28T09:21:46.590Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Runnable">
-<meta name="twitter:description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+<meta name="twitter:title" content="mysql查询锁信息">
+<meta name="twitter:description" content="MySQL下查询锁信息 SHOW PROCESSLIST;SHOW OPEN TABLES WHERE In_use &amp;gt; 0; #运行线程 SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’; #链接线程SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’; #查询数SHOW  GLOBAL  STATUS LIK">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://liugaohua.github.io/tags/tools/">
+  <link rel="canonical" href="http://liugaohua.github.io/2017/05/04/MySQL下查询锁信息/">
 
 
 
 
 
-  <title>标签: tools | Runnable</title>
+  <title>mysql查询锁信息 | Runnable</title>
   
 
 
@@ -153,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -237,52 +239,185 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>tools<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2017/05/04/MySQL下查询锁信息/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/06/25/open-tools/" itemprop="url">
-              
-                <span itemprop="name">open.tools</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">mysql查询锁信息</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-06-25T14:52:20+08:00" content="2018-06-25">
-          06-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T23:21:58+08:00">
+                2017-05-04
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>MySQL下查询锁信息</p>
+<p>SHOW PROCESSLIST;<br>SHOW OPEN TABLES WHERE In_use &gt; 0;</p>
+<p>#运行线程</p>
+<p>SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’;</p>
+<p>#链接线程<br>SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’;</p>
+<p>#查询数<br>SHOW  GLOBAL  STATUS LIKE ‘Queries%’;<br>SHOW  GLOBAL  STATUS LIKE ‘Question%’;</p>
+<p>#提交数<br>SHOW GLOBAL STATUS LIKE ‘Com_commit’;</p>
+<p>#回滚数<br>SHOW GLOBAL STATUS LIKE ‘Com_rollback’;<br>SHOW STATUS LIKE ‘Binlog_cache%’;<br>SHOW INNODB STATUS;</p>
+<p>#日志功能参数查询<br>SHOW VARIABLES LIKE ‘%pro%’;<br>SHOW PROFILES;</p>
+<p>#开启语句执行时间日志功能<br>SET profiling=0;</p>
+<p>#显示数据日志ID<br>SHOW PROFILES;</p>
+<p>SHOW PROFILE ALL FOR QUERY 839810;</p>
+<a id="more"></a> 
+<p>#查看当前MySQL容量状态</p>
+<p>SELECT<br>  table_schema AS ‘Db Name’,<br>  ROUND( SUM( data_length + index_length ) / 1024 / 1024, 3 ) AS ‘Db Size (MB)’,<br>  ROUND( SUM( data_free ) / 1024 / 1024, 3 ) AS ‘Free Space (MB)’<br>FROM information_schema.tables<br>GROUP BY table_schema ;</p>
+<p>mysql状态查看 QPS/TPS/缓存命中率查看<br>转载：<a href="http://blog.163.com/ji_1006/blog/static/106123412013101421530142/" target="_blank" rel="noopener">http://blog.163.com/ji_1006/blog/static/106123412013101421530142/</a></p>
+<p>运行中的mysql状态查看</p>
+<p>对正在运行的mysql进行监控，其中一个方式就是查看mysql运行状态。 </p>
+<p>(1)QPS(每秒Query量)<br>QPS = Questions(or Queries) / seconds<br>mysql &gt; show  global  status like ‘Question%’; </p>
+<p>(2)TPS(每秒事务量)<br>TPS = (Com_commit + Com_rollback) / seconds<br>mysql &gt; show global status like ‘Com_commit’;<br>mysql &gt; show global status like ‘Com_rollback’; </p>
+<p>(3)key Buffer 命中率<br>mysql&gt;show  global   status  like   ‘key%’;<br>key_buffer_read_hits = (1-key_reads / key_read_requests) <em> 100%<br>key_buffer_write_hits = (1-key_writes / key_write_requests) </em> 100% </p>
+<p>(4)InnoDB Buffer命中率<br>mysql&gt; show status like ‘innodb_buffer_pool_read%’;<br>innodb_buffer_read_hits = (1 - innodb_buffer_pool_reads / innodb_buffer_pool_read_requests) * 100% </p>
+<p>(5)Query Cache命中率<br>mysql&gt; show status like ‘Qcache%’;<br>Query_cache_hits = (Qcahce_hits / (Qcache_hits + Qcache_inserts )) * 100%; </p>
+<p>(6)Table Cache状态量<br>mysql&gt; show global  status like ‘open%’;<br>比较 open_tables  与 opend_tables 值 </p>
+<p>(7)Thread Cache 命中率<br>mysql&gt; show global status like ‘Thread%’;<br>mysql&gt; show global status like ‘Connections’;<br>Thread_cache_hits = (1 - Threads_created / connections ) * 100% </p>
+<p>(8)锁定状态<br>mysql&gt; show global  status like ‘%lock%’;<br>Table_locks_waited/Table_locks_immediate=0.3%  如果这个比值比较大的话，说明表锁造成的阻塞比较严重<br>Innodb_row_lock_waits innodb行锁，太大可能是间隙锁造成的 </p>
+<p>(9)复制延时量<br>mysql &gt; show slave status<br>查看延时时间 </p>
+<p>(10) Tmp Table 状况(临时表状况)<br>mysql &gt; show status like ‘Create_tmp%’;<br>Created_tmp_disk_tables/Created_tmp_tables比值最好不要超过10%，如果Created_tmp_tables值比较大，<br>可能是排序句子过多或者是连接句子不够优化 </p>
+<p>(11) Binlog Cache 使用状况<br>mysql &gt; show status like ‘Binlog_cache%’;<br>如果Binlog_cache_disk_use值不为0 ，可能需要调大 binlog_cache_size大小 </p>
+<p>(12) Innodb_log_waits 量<br>mysql &gt; show status like ‘innodb_log_waits’;<br>Innodb_log_waits值不等于0的话，表明 innodb log  buffer 因为空间不足而等待 </p>
+<p>比如命令： </p>
+<blockquote>
+<p>#show global status;<br>虽然可以使用： </p>
+<p>#show global status like %…%;<br>来过滤，但是对应长长的list，每一项都代表什么意思，还是有必要弄清楚。</p>
+</blockquote>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/面向对象设计的SOLID原则/" rel="next" title="面向对象设计的SOLID原则">
+                <i class="fa fa-chevron-left"></i> 面向对象设计的SOLID原则
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/04/explain详解-md/" rel="prev" title="explain详解.md">
+                explain详解.md <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -290,6 +425,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -504,6 +643,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
