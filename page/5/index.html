@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2017/05/04/MySQL下查询锁信息/">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2017/05/04/explain详解-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="laugh">
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/04/MySQL下查询锁信息/" itemprop="url">mysql查询锁信息</a></h1>
+                <a class="post-title-link" href="/2017/05/04/explain详解-md/" itemprop="url">explain详解.md</a></h1>
         
 
         <div class="post-meta">
@@ -322,21 +322,10 @@
 
       
         
-          <p>MySQL下查询锁信息</p>
-<p>SHOW PROCESSLIST;<br>SHOW OPEN TABLES WHERE In_use &gt; 0;</p>
-<p>#运行线程</p>
-<p>SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’;</p>
-<p>#链接线程<br>SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’;</p>
-<p>#查询数<br>SHOW  GLOBAL  STATUS LIKE ‘Queries%’;<br>SHOW  GLOBAL  STATUS LIKE ‘Question%’;</p>
-<p>#提交数<br>SHOW GLOBAL STATUS LIKE ‘Com_commit’;</p>
-<p>#回滚数<br>SHOW GLOBAL STATUS LIKE ‘Com_rollback’;<br>SHOW STATUS LIKE ‘Binlog_cache%’;<br>SHOW INNODB STATUS;</p>
-<p>#日志功能参数查询<br>SHOW VARIABLES LIKE ‘%pro%’;<br>SHOW PROFILES;</p>
-<p>#开启语句执行时间日志功能<br>SET profiling=0;</p>
-<p>#显示数据日志ID<br>SHOW PROFILES;</p>
-<p>SHOW PROFILE ALL FOR QUERY 839810;</p>
+          <p>在日常工作中，我们会有时会开慢查询去记录一些执行时间比较久的SQL语句，找出这些SQL语句并不意味着完事了，些时我们常常用到explain这个命令来查看一个这些SQL语句的执行计划，查看该SQL语句有没有使用上了索引，有没有做全表扫描，这都可以通过explain命令来查看。所以我们深入了解MySQL的基于开销的优化器，还可以获得很多可能被优化器考虑到的访问策略的细节，以及当运行SQL语句时哪种策略预计会被优化器采用。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/04/MySQL下查询锁信息/#more" rel="contents">
+            <a class="btn" href="/2017/05/04/explain详解-md/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
