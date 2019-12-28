@@ -252,6 +252,863 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/nginx生成请求id/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/28/nginx生成请求id/" itemprop="url">nginx生成请求id</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T17:10:01+08:00">
+                2019-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/nginx-logstash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/28/nginx-logstash/" itemprop="url">nginx-logstash</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T17:07:55+08:00">
+                2019-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log_format glog &apos;$remote_addr [$time_local] $request_method $scheme $http_host &quot;$request_uri&quot; &apos;</span><br><span class="line">                &apos;$status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot; $request_time &apos;</span><br><span class="line">                        &apos;$hostname &quot;$request_body&quot; $req_id&apos;;</span><br></pre></td></tr></table></figure>
+<p>lua 定义请求id</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set_by_lua_block $req_id &#123;</span><br><span class="line">	if ngx.var.http_x_nl_request_id == nil then</span><br><span class="line">		return io.open(&quot;/proc/sys/kernel/random/uuid&quot;):read()</span><br><span class="line">	else</span><br><span class="line">		return ngx.var.http_x_nl_request_id</span><br><span class="line">	end</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>logstash配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">	stdin &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">	grok &#123;</span><br><span class="line">		match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;IPORHOST:clientip&#125; \[%&#123;HTTPDATE:timestamp&#125;\] %&#123;WORD:verb&#125; %&#123;URIPROTO:scheme&#125; %&#123;URIHOST:domain&#125; \&quot;%&#123;URIPATH:uri_path&#125;(?:%&#123;URIPARAM:uri_args&#125;)?\&quot; %&#123;NUMBER:response&#125; (?:%&#123;NUMBER:bytes&#125;|-) (?:\&quot;(?:%&#123;URI:referrer&#125;|-)\&quot;|%&#123;QS:referrer&#125;) %&#123;QS:agent&#125; %&#123;BASE10NUM:request_duration&#125; %&#123;HOSTNAME:hostname&#125; \&quot;%&#123;DATA:post_data&#125;\&quot; %&#123;UUID:uuid&#125;&quot;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	date &#123;</span><br><span class="line">		match =&gt; [ &quot;timestamp&quot;, &quot;dd/MMM/YYYY:HH:mm:ss Z&quot;]  </span><br><span class="line">		target =&gt; &quot;@timestamp&quot;    </span><br><span class="line">		remove_field =&gt; [&quot;timestamp&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	mutate &#123;</span><br><span class="line">		split =&gt; [&quot;uri_args&quot;, &quot;?&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	mutate &#123;</span><br><span class="line">		join =&gt; [&quot;uri_args&quot;, &quot;&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	kv &#123;</span><br><span class="line">            source =&gt; &quot;uri_args&quot;</span><br><span class="line">            field_split =&gt; &quot;&amp;&quot;</span><br><span class="line">            target =&gt; &quot;args&quot;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	urldecode&#123;</span><br><span class="line">		field=&gt;[post_data]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	useragent &#123;</span><br><span class="line">		source =&gt; &quot;agent&quot;</span><br><span class="line">		target =&gt; &quot;ua&quot;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	geoip &#123;</span><br><span class="line">		source =&gt; &quot;clientip&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">output &#123;</span><br><span class="line">	elasticsearch &#123;</span><br><span class="line">		hosts =&gt; [ &quot;192.168.1.103:9200&quot; ]</span><br><span class="line">		index =&gt; &quot;logstash-test1-%&#123;+YYYY.MM.dd&#125;&quot;</span><br><span class="line">    		document_id =&gt; &quot;%&#123;uuid&#125;&quot;</span><br><span class="line">		template_overwrite =&gt; true</span><br><span class="line">	&#125;</span><br><span class="line">	stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>logstash-7.0.1/bin/logstash -f logstash-7.0.1/config/conf.d/nginx.conf –config.reload.automatic</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/small-case/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/28/small-case/" itemprop="url">small-case</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T17:04:20+08:00">
+                2019-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="ssh相关文件权限配置"><a href="#ssh相关文件权限配置" class="headerlink" title="ssh相关文件权限配置"></a>ssh相关文件权限配置</h3><p>chmod 700 -R .ssh #设置.ssh目录权限</p>
+<p>chmod 600. ssh/authorized_keys</p>
+<p>chmod 400 私钥</p>
+<p>使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式</p>
+<h4 id="根据私钥读取公钥"><a href="#根据私钥读取公钥" class="headerlink" title="根据私钥读取公钥"></a>根据私钥读取公钥</h4><p>sh-keygen -y -f &lt;path/to/private_key&gt; &gt; &lt;path/to/public_key&gt;<br>-y Read private key file and print public key<br>-y 的意思是读取私钥并将公钥打印出来</p>
+<h4 id="用户相关"><a href="#用户相关" class="headerlink" title="用户相关"></a>用户相关</h4><p>修改用户sh<br>usermod -s /bin/bash kaifa</p>
+<h4 id="随机密码生成"><a href="#随机密码生成" class="headerlink" title="随机密码生成"></a>随机密码生成</h4><p>openssl rand -base64 10|tr A-Z a-z</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/elasticserach-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/28/elasticserach-install/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T16:48:07+08:00">
+                2019-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="下载tar包"><a href="#下载tar包" class="headerlink" title="下载tar包"></a>下载tar包</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.0.0-linux-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
+<h4 id="增加elastic用户"><a href="#增加elastic用户" class="headerlink" title="增加elastic用户"></a>增加elastic用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adduser elastic</span><br></pre></td></tr></table></figure>
+<p>解压包到elastic用户下</p>
+<h4 id="supervisor增加配置"><a href="#supervisor增加配置" class="headerlink" title="supervisor增加配置"></a>supervisor增加配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[supervisord]</span><br><span class="line">logfile=/var/log/supervisor.log</span><br><span class="line">logfile_maxbytes=50MB        ; max main logfile bytes b4 rotation; default 50MB</span><br><span class="line">logfile_backups=10           ; # of main logfile backups; 0 means none, default 10</span><br><span class="line">loglevel=info                ; log level; default info; others: debug,warn,trace</span><br><span class="line">pidfile=/var/run/supervisor.pid</span><br><span class="line">nodaemon=false               ; start in foreground if true; default false</span><br><span class="line">minfds=65535                    ; min. avail startup file descriptors; default 1024</span><br><span class="line">minprocs=4096                   ; min. avail process descriptors;default 200</span><br></pre></td></tr></table></figure>
+<p>minfds=65535                    ; min. avail startup file descriptors; default 1024<br>minprocs=4096                   ; min. avail process descriptors;default 200</p>
+<h4 id="elasticsearch插件安装"><a href="#elasticsearch插件安装" class="headerlink" title="elasticsearch插件安装"></a>elasticsearch插件安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">./elasticsearch-7.0.0/bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip</span><br><span class="line"></span><br><span class="line">./elasticsearch-7.0.0/bin/elasticsearch-plugin install analysis-icu</span><br><span class="line">bin/plugin install elasticsearch/elasticsearch-analysis-icu/VERSION</span><br><span class="line"></span><br><span class="line">./elasticsearch-7.0.0/bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-stconvert/releases/download/v7.0.0/elasticsearch-analysis-stconvert-7.0.0.zip</span><br></pre></td></tr></table></figure>
+<p>安装之后重启生效</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/MySQL下查询锁信息/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/28/MySQL下查询锁信息/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T14:31:31+08:00">
+                2019-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>MySQL下查询锁信息</p>
+<p>SHOW PROCESSLIST;<br>SHOW OPEN TABLES WHERE In_use &gt; 0;</p>
+<p>#运行线程</p>
+<p>SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’;</p>
+<p>#链接线程<br>SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’;</p>
+<p>#查询数<br>SHOW  GLOBAL  STATUS LIKE ‘Queries%’;<br>SHOW  GLOBAL  STATUS LIKE ‘Question%’;</p>
+<p>#提交数<br>SHOW GLOBAL STATUS LIKE ‘Com_commit’;</p>
+<p>#回滚数<br>SHOW GLOBAL STATUS LIKE ‘Com_rollback’;<br>SHOW STATUS LIKE ‘Binlog_cache%’;<br>SHOW INNODB STATUS;</p>
+<p>#日志功能参数查询<br>SHOW VARIABLES LIKE ‘%pro%’;<br>SHOW PROFILES;</p>
+<p>#开启语句执行时间日志功能<br>SET profiling=0;</p>
+<p>#显示数据日志ID<br>SHOW PROFILES;</p>
+<p>SHOW PROFILE ALL FOR QUERY 839810;</p>
+<p>#查看当前MySQL容量状态</p>
+<p>SELECT<br>  table_schema AS ‘Db Name’,<br>  ROUND( SUM( data_length + index_length ) / 1024 / 1024, 3 ) AS ‘Db Size (MB)’,<br>  ROUND( SUM( data_free ) / 1024 / 1024, 3 ) AS ‘Free Space (MB)’<br>FROM information_schema.tables<br>GROUP BY table_schema ;</p>
+<p>mysql状态查看 QPS/TPS/缓存命中率查看<br>转载：<a href="http://blog.163.com/ji_1006/blog/static/106123412013101421530142/" target="_blank" rel="noopener">http://blog.163.com/ji_1006/blog/static/106123412013101421530142/</a></p>
+<p>运行中的mysql状态查看</p>
+<p>对正在运行的mysql进行监控，其中一个方式就是查看mysql运行状态。 </p>
+<p>(1)QPS(每秒Query量)<br>QPS = Questions(or Queries) / seconds<br>mysql &gt; show  global  status like ‘Question%’; </p>
+<p>(2)TPS(每秒事务量)<br>TPS = (Com_commit + Com_rollback) / seconds<br>mysql &gt; show global status like ‘Com_commit’;<br>mysql &gt; show global status like ‘Com_rollback’; </p>
+<p>(3)key Buffer 命中率<br>mysql&gt;show  global   status  like   ‘key%’;<br>key_buffer_read_hits = (1-key_reads / key_read_requests) <em> 100%<br>key_buffer_write_hits = (1-key_writes / key_write_requests) </em> 100% </p>
+<p>(4)InnoDB Buffer命中率<br>mysql&gt; show status like ‘innodb_buffer_pool_read%’;<br>innodb_buffer_read_hits = (1 - innodb_buffer_pool_reads / innodb_buffer_pool_read_requests) * 100% </p>
+<p>(5)Query Cache命中率<br>mysql&gt; show status like ‘Qcache%’;<br>Query_cache_hits = (Qcahce_hits / (Qcache_hits + Qcache_inserts )) * 100%; </p>
+<p>(6)Table Cache状态量<br>mysql&gt; show global  status like ‘open%’;<br>比较 open_tables  与 opend_tables 值 </p>
+<p>(7)Thread Cache 命中率<br>mysql&gt; show global status like ‘Thread%’;<br>mysql&gt; show global status like ‘Connections’;<br>Thread_cache_hits = (1 - Threads_created / connections ) * 100% </p>
+<p>(8)锁定状态<br>mysql&gt; show global  status like ‘%lock%’;<br>Table_locks_waited/Table_locks_immediate=0.3%  如果这个比值比较大的话，说明表锁造成的阻塞比较严重<br>Innodb_row_lock_waits innodb行锁，太大可能是间隙锁造成的 </p>
+<p>(9)复制延时量<br>mysql &gt; show slave status<br>查看延时时间 </p>
+<p>(10) Tmp Table 状况(临时表状况)<br>mysql &gt; show status like ‘Create_tmp%’;<br>Created_tmp_disk_tables/Created_tmp_tables比值最好不要超过10%，如果Created_tmp_tables值比较大，<br>可能是排序句子过多或者是连接句子不够优化 </p>
+<p>(11) Binlog Cache 使用状况<br>mysql &gt; show status like ‘Binlog_cache%’;<br>如果Binlog_cache_disk_use值不为0 ，可能需要调大 binlog_cache_size大小 </p>
+<p>(12) Innodb_log_waits 量<br>mysql &gt; show status like ‘innodb_log_waits’;<br>Innodb_log_waits值不等于0的话，表明 innodb log  buffer 因为空间不足而等待 </p>
+<p>比如命令： </p>
+<blockquote>
+<p>#show global status;<br>虽然可以使用： </p>
+<p>#show global status like %…%;<br>来过滤，但是对应长长的list，每一项都代表什么意思，还是有必要弄清楚。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/27/nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/27/nginx/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-27T14:00:04+08:00">
+                2019-12-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>语法<br>location的语法规则：location [=|~|~*|^~] /uri/ { … }<br>location匹配的变量是$uri<br>关于几种字符的说明</p>
+<p>字符    描述<br>=    表示精准匹配<br>~    表示区分大小写的正则匹配<br>~<em>    表示不区分大小写的正则匹配<br>^~    表示uri以指定字符或字符串开头<br>/    通用匹配，任何请求都会匹配到规则优先级<br>= 高于 ^~ 高于 ~</em> 等于 ~ 高于 /</p>
+<p>示例1</p>
+<p>location = “/12.jpg” { … }<br>如：<br><a href="http://www.syushin.com/12.jpg" target="_blank" rel="noopener">www.syushin.com/12.jpg</a> 匹配<br><a href="http://www.syushin.com/abc/12.jpg" target="_blank" rel="noopener">www.syushin.com/abc/12.jpg</a> 不匹配</p>
+<p>location ^~ “/abc/“ { … }<br>如：<br><a href="http://www.syushin.com/abc/123.html" target="_blank" rel="noopener">www.syushin.com/abc/123.html</a> 匹配<br><a href="http://www.syushin.com/a/abc/123.jpg" target="_blank" rel="noopener">www.syushin.com/a/abc/123.jpg</a> 不匹配</p>
+<p>location ~ “png” { … }<br>如：<br><a href="http://www.syushin.com/aaa/bbb/ccc/123.png" target="_blank" rel="noopener">www.syushin.com/aaa/bbb/ccc/123.png</a> 匹配<br><a href="http://www.syushin.com/aaa/png/123.html" target="_blank" rel="noopener">www.syushin.com/aaa/png/123.html</a> 匹配</p>
+<p>location ~* “png” { … }<br>如：<br><a href="http://www.syushin.com/aaa/bbb/ccc/123.PNG" target="_blank" rel="noopener">www.syushin.com/aaa/bbb/ccc/123.PNG</a> 匹配<br><a href="http://www.syushin.com/aaa/png/123.html" target="_blank" rel="noopener">www.syushin.com/aaa/png/123.html</a> 匹配</p>
+<p>location /admin/ { … }<br>如：<br><a href="http://www.syushin.com/admin/aaa/1.php" target="_blank" rel="noopener">www.syushin.com/admin/aaa/1.php</a> 匹配<br><a href="http://www.syushin.com/123/admin/1.php" target="_blank" rel="noopener">www.syushin.com/123/admin/1.php</a> 不匹配<br>注意：<br>有些资料上介绍location支持不匹配 !~如： location !~ ‘png’{ … }<br>这是错误的，location不支持 !~<br>如果有这样的需求，可以通过if(location优先级小于if )来实现，如： if ($uri !~ ‘png’) { … }</p>
+<p>访问控制<br>web2.0时代，很多网站都是以用户为中心，网站允许用户发布内容到服务器。由于为用户开放了上传功能，因此有很大的安全风险，比如黑客上传木马程序等等。因此，访问控制就很有必要配置了。</p>
+<p>deny与allow<br>字面上很容易理解就是拒绝和允许。<br>Nginx的deny和allow指令是由ngx_http_access_module模块提供，Nginx安装默认内置了该模块。</p>
+<p>语法<br>语法：allow/deny address | CIDR | unix: | all</p>
+<p>它表示，允许/拒绝某个ip或者一个ip段访问.如果指定unix:,那将允许socket的访问。<br>注意：unix在1.5.1中新加入的功能。<br>在nginx中，allow和deny的规则是按顺序执行的。</p>
+<p>示例1：</p>
+<p>location /<br>{<br>    allow 192.168.0.0/24;<br>    allow 127.0.0.1;<br>    deny all;<br>}<br>说明：这段配置值允许192.168.0.0/24网段和127.0.0.1的请求，其他来源IP全部拒绝。</p>
+<p>示例2：</p>
+<p>location ~ “admin”<br>{<br>    allow 192.168.30.7;<br>    deny all<br>}<br>说明：访问的uri中包含admin的请求，只允许192.168.30.7这个IP的请求。</p>
+<p>基于location的访问控制<br>日常上，访问控制基本是配合location来做配置的，直接例子吧。<br>示例1：</p>
+<p>location /blog/<br>{<br>    deny all;<br>}<br>说明：针对/blog/目录，全部禁止访问，这里的deny all;可以改为return 403;.<br>示例2</p>
+<p>location ~ “.bak|.ht”<br>{<br>    return 403;<br>}<br>说明：访问的uri中包含.bak字样的或者包含.ht的直接返回403状态码。</p>
+<p>测试链接举例：</p>
+<p><a href="http://www.syushin.com/abc.bak" target="_blank" rel="noopener">www.syushin.com/abc.bak</a></p>
+<p><a href="http://www.syushin.com/blog/123/.htalskdjf" target="_blank" rel="noopener">www.syushin.com/blog/123/.htalskdjf</a></p>
+<p>如果用户输入的URL是上面其中之一都会返回403。<br>示例3</p>
+<p>location ~ (data|cache|tmp|image|attachment).*.php$<br>{<br>    deny all;<br>}<br>说明：请求的uri中包含data、cache、tmp、image、attachment并且以.php结尾的，全部禁止访问。</p>
+<p>测试链接举例：</p>
+<p><a href="http://www.xxxxxx.com/aming/cache/1.php" target="_blank" rel="noopener">www.xxxxxx.com/aming/cache/1.php</a></p>
+<p><a href="http://www.xxxxxxx.com/image/123.phps" target="_blank" rel="noopener">www.xxxxxxx.com/image/123.phps</a></p>
+<p><a href="http://www.xxxxxx.com/aming/datas/1.php" target="_blank" rel="noopener">www.xxxxxx.com/aming/datas/1.php</a></p>
+<p>基于$document_uri的访问控制<br>前面介绍了内置变量$document_uri含义是当前请求中不包含指令的URI。<br>如<a href="http://www.123.com/1.php?a=1&amp;b=2的$document_uri就是1.php,不包含后面的参数。" target="_blank" rel="noopener">www.123.com/1.php?a=1&amp;b=2的$document_uri就是1.php,不包含后面的参数。</a><br>我们可以针对这个变量做访问控制。<br>示例1</p>
+<p>if ($document_uri ~ “/admin/“)<br>{<br>    return 403;<br>}<br>说明：当请求的uri中包含/admin/时，直接返回403.</p>
+<p>注意：if结构中不支持使用allow和deny。</p>
+<p>测试链接：</p>
+<ol>
+<li><a href="http://www.xxxxx.com/123/admin/1.html" target="_blank" rel="noopener">www.xxxxx.com/123/admin/1.html</a> 匹配</li>
+<li><a href="http://www.xxxxx.com/admin123/1.html" target="_blank" rel="noopener">www.xxxxx.com/admin123/1.html</a>  不匹配</li>
+<li><a href="http://www.xxxxx.com/admin.php" target="_blank" rel="noopener">www.xxxxx.com/admin.php</a>  不匹配<br>示例2</li>
+</ol>
+<p>if ($document_uri = /admin.php)<br>{<br>    return 403;<br>}<br>说明：请求的uri为/admin.php时返回403状态码。</p>
+<p>测试链接：</p>
+<ol>
+<li><a href="http://www.xxxxx.com/admin.php" target="_blank" rel="noopener">www.xxxxx.com/admin.php</a> # 匹配</li>
+<li><a href="http://www.xxxxx.com/123/admin.php" target="_blank" rel="noopener">www.xxxxx.com/123/admin.php</a> # 不匹配<br>示例3</li>
+</ol>
+<p>if ($document_uri ~ ‘/data/|/cache/.*.php$’)<br>{<br>    return 403;<br>}<br>说明：请求的uri包含data或者cache目录，并且是php时，返回403状态码。</p>
+<p>测试链接：</p>
+<ol>
+<li><a href="http://www.xxxxx.com/data/123.php" target="_blank" rel="noopener">www.xxxxx.com/data/123.php</a>  # 匹配</li>
+<li><a href="http://www.xxxxx.com/cache1/123.php" target="_blank" rel="noopener">www.xxxxx.com/cache1/123.php</a> # 不匹配<br>基于$request_uri访问控制<br>$request_uri比$docuemnt_uri多了请求的参数。主要是针对请求的uri中的参数进行控制。<br>示例</li>
+</ol>
+<p>if ($request_uri ~ “gid=\d{9,12}”)<br>{<br>    return 403;<br>}<br>说明：\d{9,12}是正则表达式，表示9到12个数字，例如gid=1234567890就符号要求。</p>
+<p>测试链接：</p>
+<ol>
+<li><a href="http://www.xxxxx.com/index.php?gid=1234567890&amp;pid=111" target="_blank" rel="noopener">www.xxxxx.com/index.php?gid=1234567890&amp;pid=111</a>  匹配</li>
+<li><a href="http://www.xxxxx.com/gid=123" target="_blank" rel="noopener">www.xxxxx.com/gid=123</a>  不匹配<br>背景知识：<br>曾经有一个客户的网站cc攻击，对方发起太多类似这样的请求：/read-123405150-1-1.html<br>实际上，这样的请求并不是正常的请求，网站会抛出一个页面，提示帖子不存在。<br>所以，可以直接针对这样的请求，return 403状态码。</li>
+</ol>
+<p>基于$http_user_agent的访问控制(反爬虫)<br>user_agent可以简单理解成浏览器标识，包括一些蜘蛛爬虫都可以通过user_agent来辨识。假如观察访问日志，发现一些搜索引擎的蜘蛛对网站访问特别频繁，它们并不友好。为了减少服务器的压力，其实可以把除主流搜索引擎蜘蛛外的其他蜘蛛爬虫全部封掉。<br>示例</p>
+<p>if ($user_agent ~ ‘YisouSpider|MJ12bot/v1.4.2|YoudaoBot|Tomato’)<br>{<br>    return 403;<br>}<br>说明：user_agent包含以上关键词的请求，全部返回403状态码。</p>
+<p>测试：</p>
+<ol>
+<li>curl -A “123YisouSpider1.0”</li>
+<li>curl -A “MJ12bot/v1.4.1”<br>基于$http_referer的访问控制<br>$http_referer除了可以实现防盗链的功能外，还可以做一些特殊的需求。<br>比如：</li>
+</ol>
+<p>网站被黑挂马，搜索引擎收录的网页是有问题的，当通过搜索引擎点击到网站时，却显示一个博彩网站。<br>由于查找木马需要时间，不能马上解决，为了不影响用户体验，可以针对此类请求做一个特殊操作。<br>比如，可以把从百度访问的链接直接返回404状态码，或者返回一段html代码。<br>示例</p>
+<p>if ($http_referer ~ ‘baidu.com’)<br>{<br>    return 404;<br>}<br>或者</p>
+<p>if ($http_referer ~ ‘baidu.com’)<br>{<br>    return 200 “<html><script>window.location.href=’//$host$request_uri’;</script></html>“;<br>}<br>Nginx参数优化<br>Nginx作为高性能web服务器，即使不特意调整配置参数也可以处理大量的并发请求。当然，配置调优会使Nginx性能更加强悍，配置参数需要结合服务器硬件性能等做参考。</p>
+<p>worker进程优化<br>worker_processes num;</p>
+<p>该参数表示启动几个工作进程，建议和本机CPU核数保持一致，每一核CPU处理一个进程，num表示数字。<br>worker_rlimit_nofile</p>
+<p>它表示Nginx最大可用的文件描述符个数，需要配合系统的最大描述符，建议设置为102400。<br>还需要在系统里执行ulimit -n 102400才可以。<br>也可以直接修改配置文件/etc/security/limits.conf修改<br>增加：</p>
+<p>#* soft nofile 655350 (去掉前面的#)</p>
+<p>#* hard nofile 655350 (去掉前面的#)<br>worker_connections</p>
+<p>该参数用来配置每个Nginx worker进程最大处理的连接数,<br>这个参数也决定了该Nginx服务器最多能处理多少客户端请求（worker_processes * worker_connections)<br>建议把该参数设置为10240，不建议太大。<br>http/tcp连接数优化<br>use epoll</p>
+<p>使用epoll模式的事件驱动模型，该模型为Linux系统下最优方式。<br>multi_accept on</p>
+<p>使每个worker进程可以同时处理多个客户端请求。<br>sendfile on</p>
+<p>使用内核的FD文件传输功能，可以减少user mode和kernel mode的切换，从而提升服务器性能。<br>tcp_nopush on</p>
+<p>当tcp_nopush设置为on时，会调用tcp_cork方法进行数据传输。<br>使用该方法会产生这样的效果：当应用程序产生数据时，<br>内核不会立马封装包，而是当数据量积累到一定量时才会封装，然后传输。<br>tcp_nodelay on</p>
+<p>不缓存data-sends（关闭 Nagle 算法），这个能够提高高频发送小数据报文的实时性。<br>(关于Nagle算法)</p>
+<p>【假如需要频繁的发送一些小包数据，比如说1个字节，以IPv4为例的话，则每个包都要附带40字节的头，<br>也就是说，总计41个字节的数据里，其中只有1个字节是我们需要的数据。<br>为了解决这个问题，出现了Nagle算法。<br>它规定：如果包的大小满足MSS，那么可以立即发送，否则数据会被放到缓冲区，等到已经发送的包被确认了之后才能继续发送。<br>通过这样的规定，可以降低网络里小包的数量，从而提升网络性能。<br>keepalive_timeout</p>
+<p>定义长连接的超时时间，建议30s，太短或者太长都不一定合适，当然，最好是根据业务自身的情况来动态地调整该参数。<br>keepalive_requests</p>
+<p>定义当客户端和服务端处于长连接的情况下，每个客户端最多可以请求多少次，可以设置很大，比如50000.<br>reset_timeout_connection on</p>
+<p>设置为on的话，当客户端不再向服务端发送请求时，允许服务端关闭该连接。<br>client_body_timeout</p>
+<p>客户端如果在该指定时间内没有加载完body数据，则断开连接，单位是秒，默认60，可以设置为10。<br>send_timeout</p>
+<p>这个超时时间是发送响应的超时时间，即Nginx服务器向客户端发送了数据包，但客户端一直没有去接收这个数据包。<br>如果某个连接超过send_timeout定义的超时时间，那么Nginx将会关闭这个连接。单位是秒，可以设置为3。<br>压缩<br>对于纯文本的内容，Nginx是可以使用gzip压缩的。使用压缩技术可以减少对带宽的消耗。<br>由ngx_http_gzip_module模块支持</p>
+<p>配置如下：</p>
+<p>gzip on; //开启gzip功能<br>gzip_min_length 1024; //设置请求资源超过该数值才进行压缩，单位字节<br>gzip_buffers 16 8k; //设置压缩使用的buffer大小，第一个数字为数量，第二个为每个buffer的大小<br>gzip_comp_level 6; //设置压缩级别，范围1-9,9压缩级别最高，也最耗费CPU资源<br>gzip_types text/plain application/x-javascript text/css application/xml image/jpeg image/gif image/png; //指定哪些类型的文件需要压缩<br>gzip_disable “MSIE 6.“; //IE6浏览器不启用压缩<br>测试：</p>
+<p>curl -I -H “Accept-Encoding: gzip, deflate” <a href="http://www.xxxxx.com/1.css" target="_blank" rel="noopener">http://www.xxxxx.com/1.css</a><br>日志<br>错误日志级别调高，比如crit级别，尽量少记录无关紧要的日志。</p>
+<p>对于访问日志，如果不要求记录日志，可以关闭，</p>
+<p>静态资源的访问日志关闭</p>
+<p>静态文件过期<br>对于静态文件，需要设置一个过期时间，这样可以让这些资源缓存到客户端浏览器，<br>在缓存未失效前，客户端不再向服务期请求相同的资源，从而节省带宽和资源消耗。</p>
+<p>配置示例如下：</p>
+<p>location ~* ^.+.(gif|jpg|png|css|js)$<br>{<br>    expires 1d; //1d表示1天，也可以用24h表示一天。<br>}</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/04/elasticsearch-常用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -743,778 +1600,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/11/19/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/19/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-19T12:38:53+08:00">
-                2019-11-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/19/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/08/29/kibana-nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/29/kibana-nginx/" itemprop="url">kibana.nginx</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-29T10:20:48+08:00">
-                2019-08-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="nginx配置文件-kibana-conf"><a href="#nginx配置文件-kibana-conf" class="headerlink" title="nginx配置文件 kibana.conf"></a>nginx配置文件 kibana.conf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line"></span><br><span class="line">    server_name &lt;YourKibanaIP&gt;;</span><br><span class="line"></span><br><span class="line">    auth_basic "Restricted Access";</span><br><span class="line">    auth_basic_user_file /etc/nginx/htpasswd.users.kibana;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass http://localhost:5601;</span><br><span class="line">        proxy_http_version 1.1;</span><br><span class="line">        proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">        proxy_set_header Connection 'upgrade';</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_cache_bypass $http_upgrade;        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="生成http认证用户"><a href="#生成http认证用户" class="headerlink" title="生成http认证用户"></a>生成http认证用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;kadmin:`openssl passwd -apr1`&quot; | sudo tee -a ./htpasswd.users.kibana</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/07/23/elasticsearch计算词频/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/23/elasticsearch计算词频/" itemprop="url">elasticsearch计算词频</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T09:01:43+08:00">
-                2019-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>安装环境：<br>elasticsearch-7.0<br>analysis_ik</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">GET /sale_comment/_search</span><br><span class="line">&#123;</span><br><span class="line">    <span class="attr">"size"</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">"aggs"</span>:&#123;</span><br><span class="line">        <span class="attr">"content"</span>:&#123;</span><br><span class="line">            <span class="attr">"terms"</span>:&#123;</span><br><span class="line">                <span class="attr">"size"</span>:<span class="number">1000</span>,</span><br><span class="line">                <span class="attr">"field"</span>:<span class="string">"content"</span>,</span><br><span class="line">                <span class="attr">"include"</span>:<span class="string">"[\u4E00-\u9FA5]&#123;2,6&#125;"</span>,</span><br><span class="line">                <span class="attr">"exclude"</span>:<span class="string">"的.*|很.*|不.*|了.*|也.*|買.*|好.*|錯.*"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">"aggregations": &#123;</span><br><span class="line">     "content": &#123;</span><br><span class="line">        "doc_count_error_upper_bound": 0,</span><br><span class="line">        "sum_other_doc_count": 205350,</span><br><span class="line">        "buckets": [</span><br><span class="line">           &#123;</span><br><span class="line">              <span class="attr">"key"</span>: <span class="string">"舒服"</span>,</span><br><span class="line">              <span class="attr">"doc_count"</span>: <span class="number">6051</span></span><br><span class="line">           &#125;,</span><br><span class="line">           &#123;</span><br><span class="line">              <span class="attr">"key"</span>: <span class="string">"非常"</span>,</span><br><span class="line">              <span class="attr">"doc_count"</span>: <span class="number">5583</span></span><br><span class="line">           &#125;,</span><br><span class="line">           &#123;</span><br><span class="line">              <span class="attr">"key"</span>: <span class="string">"效果"</span>,</span><br><span class="line">              <span class="attr">"doc_count"</span>: <span class="number">5289</span></span><br><span class="line">           &#125;,</span><br><span class="line">           &#123;</span><br><span class="line">              <span class="attr">"key"</span>: <span class="string">"真的"</span>,</span><br><span class="line">              <span class="attr">"doc_count"</span>: <span class="number">3404</span></span><br><span class="line">           &#125;,</span><br><span class="line">           &#123;</span><br><span class="line">              <span class="attr">"key"</span>: <span class="string">"到了"</span>,</span><br><span class="line">              <span class="attr">"doc_count"</span>: <span class="number">3383</span></span><br><span class="line">           &#125;</span><br><span class="line">        ]</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/07/23/linux-tools/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/23/linux-tools/" itemprop="url">linux.tools</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-23T09:00:06+08:00">
-                2019-07-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>apt install zsh git vagrant wget curl vim npm nvm tldr jmeter nmap</p>
-<p>sudo npm install -g commitizen</p>
-<h2 id="phpbrew"><a href="#phpbrew" class="headerlink" title="phpbrew"></a>phpbrew</h2><p>sh -c “$(curl -fsSL <a href="https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.s" target="_blank" rel="noopener">https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.s</a><br>h)”</p>
-<p>sudo add-apt-repository ppa:wiznote-team<br>sudo apt-get update<br>sudo apt-get install wiznote</p>
-<p>sudo apt-get install openssl</p>
-<p>sudo apt-get install libssl-dev</p>
-<h2 id="nvm"><a href="#nvm" class="headerlink" title="nvm"></a>nvm</h2><p>curl -o- <a href="https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh" target="_blank" rel="noopener">https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh</a> | bash<br>npm install -g n</p>
-<p>supervisor pm2</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/05/22/xhprof-php7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/22/xhprof-php7/" itemprop="url">xhprof.php7</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T18:19:10+08:00">
-                2019-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="git-clone-https-github-com-tideways-php-xhprof-extension-git"><a href="#git-clone-https-github-com-tideways-php-xhprof-extension-git" class="headerlink" title="git clone https://github.com/tideways/php-xhprof-extension.git"></a>git clone <a href="https://github.com/tideways/php-xhprof-extension.git" target="_blank" rel="noopener">https://github.com/tideways/php-xhprof-extension.git</a></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">phpize </span><br><span class="line">yum install autoconf</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-<p>git clone <a href="https://github.com/preinheimer/xhprof.git" target="_blank" rel="noopener">https://github.com/preinheimer/xhprof.git</a></p>
-<p>nginx配置<br>fastcgi_param PHP_VALUE “auto_prepend_file=/home/xhprof/external/header.php”;</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/03/20/mysql的innodb幻读问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/20/mysql的innodb幻读问题/" itemprop="url">mysql的innodb幻读问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T13:14:22+08:00">
-                2019-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://dev.mysql.com/doc/refman/8.0/en/set-transaction.html" target="_blank" rel="noopener">MySQL InnoDB事务的隔离级别</a>有四级，默认是“可重复读”（REPEATABLE READ）。</p>
-<p>未提交读（READ UNCOMMITTED）。另一个事务修改了数据，但尚未提交，而本事务中的SELECT会读到这些未被提交的数据（脏读）。<br>提交读（READ COMMITTED）。本事务读取到的是最新的数据（其他事务提交后的）。问题是，在同一个事务里，前后两次相同的SELECT会读到不同的结果（不重复读）。<br>可重复读（REPEATABLE READ）。在同一个事务里，SELECT的结果是事务开始时时间点的状态，因此，同样的SELECT操作读到的结果会是一致的。但是，会有幻读现象（稍后解释）。<br>串行化（SERIALIZABLE）。读操作会隐式获取共享锁，可以保证不同事务间的互斥。<br>四个级别逐渐增强，每个级别解决一个问题。</p>
-<p>脏读，最容易理解。另一个事务修改了数据，但尚未提交，而本事务中的SELECT会读到这些未被提交的数据。<br>不重复读。解决了脏读后，会遇到，同一个事务执行过程中，另外一个事务提交了新数据，因此本事务先后两次读到的数据结果会不一致。<br>幻读。解决了不重复读，保证了同一个事务里，查询的结果都是事务开始时的状态（一致性）。但是，如果另一个事务同时提交了新数据，本事务再更新时，就会“惊奇的”发现了这些新数据，貌似之前读到的数据是“鬼影”一样的幻觉。<br>借鉴并改造了一个搞笑的比喻：</p>
-<p>脏读。假如，中午去食堂打饭吃，看到一个座位被同学小Q占上了，就认为这个座位被占去了，就转身去找其他的座位。不料，这个同学小Q起身走了。事实：该同学小Q只是临时坐了一小下，并未“提交”。<br>不重复读。假如，中午去食堂打饭吃，看到一个座位是空的，便屁颠屁颠的去打饭，回来后却发现这个座位却被同学小Q占去了。</p>
-<h2 id="幻读。假如，中午去食堂打饭吃，看到一个座位是空的，便屁颠屁颠的去打饭，回来后，发现这些座位都还是空的（重复读），窃喜。走到跟前刚准备坐下时，却惊现一个恐龙妹，严重影响食欲。仿佛之前看到的空座位是“幻影”一样。"><a href="#幻读。假如，中午去食堂打饭吃，看到一个座位是空的，便屁颠屁颠的去打饭，回来后，发现这些座位都还是空的（重复读），窃喜。走到跟前刚准备坐下时，却惊现一个恐龙妹，严重影响食欲。仿佛之前看到的空座位是“幻影”一样。" class="headerlink" title="幻读。假如，中午去食堂打饭吃，看到一个座位是空的，便屁颠屁颠的去打饭，回来后，发现这些座位都还是空的（重复读），窃喜。走到跟前刚准备坐下时，却惊现一个恐龙妹，严重影响食欲。仿佛之前看到的空座位是“幻影”一样。"></a>幻读。假如，中午去食堂打饭吃，看到一个座位是空的，便屁颠屁颠的去打饭，回来后，发现这些座位都还是空的（重复读），窃喜。走到跟前刚准备坐下时，却惊现一个恐龙妹，严重影响食欲。仿佛之前看到的空座位是“幻影”一样。</h2><p>一些文章写到InnoDB的可重复读避免了“幻读”（phantom read），这个说法并不准确。</p>
-<ul>
-<li><p>获得当前会话的TRX_ID 事务ID</p>
-<blockquote>
-<p>start transaction;<br>SELECT TRX_ID FROM INFORMATION_SCHEMA.INNODB_TRX  WHERE TRX_MYSQL_THREAD_ID = CONNECTION_ID();<br>commit;</p>
-</blockquote>
-</li>
-<li><p>查询 正在执行的事务：</p>
-<blockquote>
-<p>SELECT * FROM information_schema.INNODB_TRX</p>
-</blockquote>
-</li>
-<li><p>查看正在锁的事务</p>
-<blockquote>
-<p>SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCKS;</p>
-</blockquote>
-</li>
-<li><p>查看等待锁的事务</p>
-</li>
-</ul>
-<blockquote>
-<p>SELECT * FROM INFORMATION_SCHEMA.INNODB_LOCK_WAITS;</p>
-</blockquote>
-<p>如果使用普通的读，会得到一致性的结果，如果使用了加锁的读，就会读到“最新的”“提交”读的结果。</p>
-<p>本身，可重复读和提交读是矛盾的。在同一个事务里，如果保证了可重复读，就会看不到其他事务的提交，违背了提交读；如果保证了提交读，就会导致前后两次读到的结果不一致，违背了可重复读。</p>
-<p>可以这么讲，InnoDB提供了这样的机制，在默认的可重复读的隔离级别里，可以使用加锁读去查询最新的数据。</p>
-<blockquote>
-<p><a href="http://dev.mysql.com/doc/refman/5.0/en/innodb-consistent-read.html" target="_blank" rel="noopener">http://dev.mysql.com/doc/refman/5.0/en/innodb-consistent-read.html</a></p>
-<p>If you want to see the “freshest” state of the database, you should use either the READ COMMITTED isolation level or a locking read:<br>SELECT * FROM t_bitfly LOCK IN SHARE MODE;</p>
-</blockquote>
-<hr>
-<p>结论：MySQL InnoDB的可重复读并不保证避免幻读，需要应用使用加锁读来保证。而这个加锁度使用到的机制就是next-key locks。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1565,7 +1650,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1587,7 +1672,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
