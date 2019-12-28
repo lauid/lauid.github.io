@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;quot;$ht">
+<meta name="description" content="nginx日志格式定义123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot">
 <meta name="keywords" content="nginx,elk">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx-logstash">
 <meta property="og:url" content="http://liugaohua.github.io/2019/12/28/nginx-logstash/index.html">
 <meta property="og:site_name" content="Runnable">
-<meta property="og:description" content="123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;quot;$ht">
+<meta property="og:description" content="nginx日志格式定义123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-28T09:10:17.479Z">
+<meta property="og:updated_time" content="2019-12-28T09:15:50.479Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx-logstash">
-<meta name="twitter:description" content="123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot; &amp;quot;$ht">
+<meta name="twitter:description" content="nginx日志格式定义123log_format glog &amp;apos;$remote_addr [$time_local] $request_method $scheme $http_host &amp;quot;$request_uri&amp;quot; &amp;apos;                &amp;apos;$status $body_bytes_sent &amp;quot;$http_referer&amp;quot">
 
 
 
@@ -320,7 +320,8 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log_format glog &apos;$remote_addr [$time_local] $request_method $scheme $http_host &quot;$request_uri&quot; &apos;</span><br><span class="line">                &apos;$status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot; $request_time &apos;</span><br><span class="line">                        &apos;$hostname &quot;$request_body&quot; $req_id&apos;;</span><br></pre></td></tr></table></figure>
+        <h4 id="nginx日志格式定义"><a href="#nginx日志格式定义" class="headerlink" title="nginx日志格式定义"></a>nginx日志格式定义</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log_format glog &apos;$remote_addr [$time_local] $request_method $scheme $http_host &quot;$request_uri&quot; &apos;</span><br><span class="line">                &apos;$status $body_bytes_sent &quot;$http_referer&quot; &quot;$http_user_agent&quot; $request_time &apos;</span><br><span class="line">                        &apos;$hostname &quot;$request_body&quot; $req_id&apos;;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>lua 定义请求id</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set_by_lua_block $req_id &#123;</span><br><span class="line">	if ngx.var.http_x_nl_request_id == nil then</span><br><span class="line">		return io.open(&quot;/proc/sys/kernel/random/uuid&quot;):read()</span><br><span class="line">	else</span><br><span class="line">		return ngx.var.http_x_nl_request_id</span><br><span class="line">	end</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>logstash配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">	stdin &#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter &#123;</span><br><span class="line">	grok &#123;</span><br><span class="line">		match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;IPORHOST:clientip&#125; \[%&#123;HTTPDATE:timestamp&#125;\] %&#123;WORD:verb&#125; %&#123;URIPROTO:scheme&#125; %&#123;URIHOST:domain&#125; \&quot;%&#123;URIPATH:uri_path&#125;(?:%&#123;URIPARAM:uri_args&#125;)?\&quot; %&#123;NUMBER:response&#125; (?:%&#123;NUMBER:bytes&#125;|-) (?:\&quot;(?:%&#123;URI:referrer&#125;|-)\&quot;|%&#123;QS:referrer&#125;) %&#123;QS:agent&#125; %&#123;BASE10NUM:request_duration&#125; %&#123;HOSTNAME:hostname&#125; \&quot;%&#123;DATA:post_data&#125;\&quot; %&#123;UUID:uuid&#125;&quot;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	date &#123;</span><br><span class="line">		match =&gt; [ &quot;timestamp&quot;, &quot;dd/MMM/YYYY:HH:mm:ss Z&quot;]  </span><br><span class="line">		target =&gt; &quot;@timestamp&quot;    </span><br><span class="line">		remove_field =&gt; [&quot;timestamp&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	mutate &#123;</span><br><span class="line">		split =&gt; [&quot;uri_args&quot;, &quot;?&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	mutate &#123;</span><br><span class="line">		join =&gt; [&quot;uri_args&quot;, &quot;&quot;]</span><br><span class="line">	&#125;</span><br><span class="line">	kv &#123;</span><br><span class="line">            source =&gt; &quot;uri_args&quot;</span><br><span class="line">            field_split =&gt; &quot;&amp;&quot;</span><br><span class="line">            target =&gt; &quot;args&quot;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	urldecode&#123;</span><br><span class="line">		field=&gt;[post_data]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	useragent &#123;</span><br><span class="line">		source =&gt; &quot;agent&quot;</span><br><span class="line">		target =&gt; &quot;ua&quot;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	geoip &#123;</span><br><span class="line">		source =&gt; &quot;clientip&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">output &#123;</span><br><span class="line">	elasticsearch &#123;</span><br><span class="line">		hosts =&gt; [ &quot;192.168.1.103:9200&quot; ]</span><br><span class="line">		index =&gt; &quot;logstash-test1-%&#123;+YYYY.MM.dd&#125;&quot;</span><br><span class="line">    		document_id =&gt; &quot;%&#123;uuid&#125;&quot;</span><br><span class="line">		template_overwrite =&gt; true</span><br><span class="line">	&#125;</span><br><span class="line">	stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -419,8 +420,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -480,6 +490,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#nginx日志格式定义"><span class="nav-number">1.</span> <span class="nav-text">nginx日志格式定义</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

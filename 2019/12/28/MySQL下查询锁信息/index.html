@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Runnable">
 <meta property="og:description" content="MySQL下查询锁信息 SHOW PROCESSLIST;SHOW OPEN TABLES WHERE In_use &amp;gt; 0; #运行线程 SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’; #链接线程SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’; #查询数SHOW  GLOBAL  STATUS LIK">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-28T06:32:15.637Z">
+<meta property="og:updated_time" content="2019-12-28T09:16:07.950Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Runnable">
 <meta name="twitter:description" content="MySQL下查询锁信息 SHOW PROCESSLIST;SHOW OPEN TABLES WHERE In_use &amp;gt; 0; #运行线程 SHOW  GLOBAL  STATUS LIKE ‘Threads_running%’; #链接线程SHOW  GLOBAL  STATUS LIKE ‘Threads_connected%’; #查询数SHOW  GLOBAL  STATUS LIK">
@@ -331,6 +331,7 @@
 <p>#开启语句执行时间日志功能<br>SET profiling=0;</p>
 <p>#显示数据日志ID<br>SHOW PROFILES;</p>
 <p>SHOW PROFILE ALL FOR QUERY 839810;</p>
+<a id="more"></a> 
 <p>#查看当前MySQL容量状态</p>
 <p>SELECT<br>  table_schema AS ‘Db Name’,<br>  ROUND( SUM( data_length + index_length ) / 1024 / 1024, 3 ) AS ‘Db Size (MB)’,<br>  ROUND( SUM( data_free ) / 1024 / 1024, 3 ) AS ‘Free Space (MB)’<br>FROM information_schema.tables<br>GROUP BY table_schema ;</p>
 <p>mysql状态查看 QPS/TPS/缓存命中率查看<br>转载：<a href="http://blog.163.com/ji_1006/blog/static/106123412013101421530142/" target="_blank" rel="noopener">http://blog.163.com/ji_1006/blog/static/106123412013101421530142/</a></p>

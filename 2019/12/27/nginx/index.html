@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 / 示">
+<meta name="description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 /">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Runnable">
 <meta property="og:url" content="http://liugaohua.github.io/2019/12/27/nginx/index.html">
 <meta property="og:site_name" content="Runnable">
-<meta property="og:description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 / 示">
+<meta property="og:description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 /">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-27T06:06:10.165Z">
+<meta property="og:updated_time" content="2019-12-28T09:15:36.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Runnable">
-<meta name="twitter:description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 / 示">
+<meta name="twitter:description" content="语法location的语法规则：location [=|~|~*|^~] /uri/ { … }location匹配的变量是$uri关于几种字符的说明 字符    描述=    表示精准匹配~    表示区分大小写的正则匹配~    表示不区分大小写的正则匹配^~    表示uri以指定字符或字符串开头/    通用匹配，任何请求都会匹配到规则优先级= 高于 ^~ 高于 ~ 等于 ~ 高于 /">
 
 
 
@@ -321,6 +321,7 @@
       
         <p>语法<br>location的语法规则：location [=|~|~*|^~] /uri/ { … }<br>location匹配的变量是$uri<br>关于几种字符的说明</p>
 <p>字符    描述<br>=    表示精准匹配<br>~    表示区分大小写的正则匹配<br>~<em>    表示不区分大小写的正则匹配<br>^~    表示uri以指定字符或字符串开头<br>/    通用匹配，任何请求都会匹配到规则优先级<br>= 高于 ^~ 高于 ~</em> 等于 ~ 高于 /</p>
+<a id="more"></a>
 <p>示例1</p>
 <p>location = “/12.jpg” { … }<br>如：<br><a href="http://www.syushin.com/12.jpg" target="_blank" rel="noopener">www.syushin.com/12.jpg</a> 匹配<br><a href="http://www.syushin.com/abc/12.jpg" target="_blank" rel="noopener">www.syushin.com/abc/12.jpg</a> 不匹配</p>
 <p>location ^~ “/abc/“ { … }<br>如：<br><a href="http://www.syushin.com/abc/123.html" target="_blank" rel="noopener">www.syushin.com/abc/123.html</a> 匹配<br><a href="http://www.syushin.com/a/abc/123.jpg" target="_blank" rel="noopener">www.syushin.com/a/abc/123.jpg</a> 不匹配</p>

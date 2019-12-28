@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式 根据私钥读取公钥sh-keygen -y -f &amp;lt;path/to/private_key&amp;gt; &amp;gt; &amp;lt;path/to/pu">
+<meta name="description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta name="keywords" content="note,tools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="small-case">
 <meta property="og:url" content="http://liugaohua.github.io/2019/12/28/small-case/index.html">
 <meta property="og:site_name" content="Runnable">
-<meta property="og:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式 根据私钥读取公钥sh-keygen -y -f &amp;lt;path/to/private_key&amp;gt; &amp;gt; &amp;lt;path/to/pu">
+<meta property="og:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-28T09:10:22.958Z">
+<meta property="og:updated_time" content="2019-12-28T09:15:29.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="small-case">
-<meta name="twitter:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式 根据私钥读取公钥sh-keygen -y -f &amp;lt;path/to/private_key&amp;gt; &amp;gt; &amp;lt;path/to/pu">
+<meta name="twitter:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 
 
 
@@ -324,8 +324,10 @@
 <p>chmod 600. ssh/authorized_keys</p>
 <p>chmod 400 私钥</p>
 <p>使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式</p>
+<a id="more"></a>
 <h4 id="根据私钥读取公钥"><a href="#根据私钥读取公钥" class="headerlink" title="根据私钥读取公钥"></a>根据私钥读取公钥</h4><p>sh-keygen -y -f &lt;path/to/private_key&gt; &gt; &lt;path/to/public_key&gt;<br>-y Read private key file and print public key<br>-y 的意思是读取私钥并将公钥打印出来</p>
 <h4 id="用户相关"><a href="#用户相关" class="headerlink" title="用户相关"></a>用户相关</h4><p>修改用户sh<br>usermod -s /bin/bash kaifa</p>
+<p>删除用户<br> rm -rf /var/spool/mail/user1<br> rm -rf /home/user1<br>userdel -r user1    这样可以完全删除用户的家目录，邮箱目录等。</p>
 <h4 id="随机密码生成"><a href="#随机密码生成" class="headerlink" title="随机密码生成"></a>随机密码生成</h4><p>openssl rand -base64 10|tr A-Z a-z</p>
 
       
