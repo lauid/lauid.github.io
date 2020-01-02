@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="elasticsearch,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="cluster.name: elasticsearch  配置的集群名称，默认是elasticsearch，es服务会通过广播方式自动连接在同一网段下的es服务，通过多播方式进行通信，同一网段下可以有多个集群，通过集群名称这个属性来区分不同的集群。  node.name: “Franz Kafka”  当前配置所在机器的节点名，你不设置就默认随机指定一个name列表中名字，该name列表在es的j">
+<meta name="keywords" content="elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elasticsearch参数详解">
+<meta property="og:url" content="http://liugaohua.github.io/2019/12/31/elasticsearch参数详解/index.html">
+<meta property="og:site_name" content="Runnable">
+<meta property="og:description" content="cluster.name: elasticsearch  配置的集群名称，默认是elasticsearch，es服务会通过广播方式自动连接在同一网段下的es服务，通过多播方式进行通信，同一网段下可以有多个集群，通过集群名称这个属性来区分不同的集群。  node.name: “Franz Kafka”  当前配置所在机器的节点名，你不设置就默认随机指定一个name列表中名字，该name列表在es的j">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-02T03:32:42.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elasticsearch参数详解">
+<meta name="twitter:description" content="cluster.name: elasticsearch  配置的集群名称，默认是elasticsearch，es服务会通过广播方式自动连接在同一网段下的es服务，通过多播方式进行通信，同一网段下可以有多个集群，通过集群名称这个属性来区分不同的集群。  node.name: “Franz Kafka”  当前配置所在机器的节点名，你不设置就默认随机指定一个name列表中名字，该name列表在es的j">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liugaohua.github.io/2019/12/31/elasticsearch参数详解/">
+
+
+
+
+
+  <title>elasticsearch参数详解 | Runnable</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6a35fff8f36aebd9be09e2be88ef1e09";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runnable</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">strong to refuse</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/31/elasticsearch参数详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">elasticsearch参数详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-31T13:50:50+08:00">
+                2019-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>cluster.name: elasticsearch</p>
+<blockquote>
+<p>配置的集群名称，默认是elasticsearch，es服务会通过广播方式自动连接在同一网段下的es服务，通过多播方式进行通信，同一网段下可以有多个集群，通过集群名称这个属性来区分不同的集群。</p>
+</blockquote>
+<p>node.name: “Franz Kafka”</p>
+<blockquote>
+<p>当前配置所在机器的节点名，你不设置就默认随机指定一个name列表中名字，该name列表在es的jar包中config文件夹里name.txt文件中，其中有很多作者添加的有趣名字。</p>
+</blockquote>
+<p>node.master: true</p>
+<blockquote>
+<p>指定该节点是否有资格被选举成为node（注意这里只是设置成有资格， 不代表该node一定就是master），默认是true，es是默认集群中的第一台机器为master，如果这台机挂了就会重新选举master。</p>
+</blockquote>
+<a id="more"></a>
+<p>node.data: true</p>
+<blockquote>
+<p>指定该节点是否存储索引数据，默认为true。</p>
+</blockquote>
+<p>index.number_of_shards: 5</p>
+<blockquote>
+<p>设置默认索引分片个数，默认为5片。</p>
+</blockquote>
+<p>index.number_of_replicas: 1</p>
+<blockquote>
+<p>设置默认索引副本个数，默认为1个副本。如果采用默认设置，而你集群只配置了一台机器，那么集群的健康度为yellow，也就是所有的数据都是可用的，但是某些复制没有被分配<br>（健康度可用 curl ‘localhost:9200/_cat/health?v’ 查看， 分为绿色、黄色或红色。绿色代表一切正常，集群功能齐全，黄色意味着所有的数据都是可用的，但是某些复制没有被分配，红色则代表因为某些原因，某些数据不可用）。</p>
+</blockquote>
+<p>path.conf: /path/to/conf</p>
+<blockquote>
+<p>设置配置文件的存储路径，默认是es根目录下的config文件夹。</p>
+</blockquote>
+<p>path.data: /path/to/data</p>
+<blockquote>
+<p>设置索引数据的存储路径，默认是es根目录下的data文件夹，可以设置多个存储路径，用逗号隔开，例：<br>path.data: /path/to/data1,/path/to/data2</p>
+</blockquote>
+<p>path.work: /path/to/work</p>
+<blockquote>
+<p>设置临时文件的存储路径，默认是es根目录下的work文件夹。</p>
+</blockquote>
+<p>path.logs: /path/to/logs</p>
+<blockquote>
+<p>设置日志文件的存储路径，默认是es根目录下的logs文件夹 </p>
+</blockquote>
+<p>path.plugins: /path/to/plugins</p>
+<blockquote>
+<p>设置插件的存放路径，默认是es根目录下的plugins文件夹, 插件在es里面普遍使用，用来增强原系统核心功能。</p>
+</blockquote>
+<p>bootstrap.mlockall: true</p>
+<blockquote>
+<p>设置为true来锁住内存不进行swapping。因为当jvm开始swapping时es的效率 会降低，所以要保证它不swap，可以把ES_MIN_MEM和ES_MAX_MEM两个环境变量设置成同一个值，并且保证机器有足够的内存分配给es。 同时也要允许elasticsearch的进程可以锁住内# # 存，linux下启动es之前可以通过<code>ulimit -l unlimited</code>命令设置。</p>
+</blockquote>
+<p>network.bind_host: 192.168.0.1</p>
+<blockquote>
+<p>设置绑定的ip地址，可以是ipv4或ipv6的，默认为0.0.0.0，绑定这台机器的任何一个ip。</p>
+</blockquote>
+<p>network.publish_host: 192.168.0.1</p>
+<blockquote>
+<p>设置其它节点和该节点交互的ip地址，如果不设置它会自动判断，值必须是个真实的ip地址。</p>
+</blockquote>
+<p>network.host: 192.168.0.1</p>
+<blockquote>
+<p>这个参数是用来同时设置bind_host和publish_host上面两个参数。</p>
+</blockquote>
+<p>transport.tcp.port: 9300</p>
+<blockquote>
+<p>设置节点之间交互的tcp端口，默认是9300。</p>
+</blockquote>
+<p>transport.tcp.compress: true</p>
+<blockquote>
+<p>设置是否压缩tcp传输时的数据，默认为false，不压缩。</p>
+</blockquote>
+<p>http.port: 9200</p>
+<blockquote>
+<p>设置对外服务的http端口，默认为9200。</p>
+</blockquote>
+<p>http.max_content_length: 100mb</p>
+<blockquote>
+<p>设置内容的最大容量，默认100mb</p>
+</blockquote>
+<p>http.enabled: false</p>
+<blockquote>
+<p>是否使用http协议对外提供服务，默认为true，开启。</p>
+</blockquote>
+<p>gateway.type: local</p>
+<blockquote>
+<p>gateway的类型，默认为local即为本地文件系统，可以设置为本地文件系统，分布式文件系统，hadoop的HDFS，和amazon的s3服务器等。</p>
+</blockquote>
+<p>gateway.recover_after_nodes: 1</p>
+<blockquote>
+<p>设置集群中N个节点启动时进行数据恢复，默认为1。</p>
+</blockquote>
+<p>gateway.recover_after_time: 5m</p>
+<blockquote>
+<p>设置初始化数据恢复进程的超时时间，默认是5分钟。</p>
+</blockquote>
+<p>gateway.expected_nodes: 2</p>
+<blockquote>
+<p>设置这个集群中节点的数量，默认为2，一旦这N个节点启动，就会立即进行数据恢复。</p>
+</blockquote>
+<p>cluster.routing.allocation.node_initial_primaries_recoveries: 4</p>
+<blockquote>
+<p>初始化数据恢复时，并发恢复线程的个数，默认为4。</p>
+</blockquote>
+<p>cluster.routing.allocation.node_concurrent_recoveries: 2</p>
+<blockquote>
+<p>添加删除节点或负载均衡时并发恢复线程的个数，默认为4。</p>
+</blockquote>
+<p>indices.recovery.max_size_per_sec: 0</p>
+<blockquote>
+<p>设置数据恢复时限制的带宽，如入100mb，默认为0，即无限制。</p>
+</blockquote>
+<p>indices.recovery.concurrent_streams: 5</p>
+<blockquote>
+<p>设置这个参数来限制从其它分片恢复数据时最大同时打开并发流的个数，默认为5。</p>
+</blockquote>
+<p>discovery.zen.minimum_master_nodes: 1</p>
+<blockquote>
+<p>设置这个参数来保证集群中的节点可以知道其它N个有master资格的节点。默认为1，对于大的集群来说，可以设置大一点的值（2-4）</p>
+</blockquote>
+<p>discovery.zen.ping.timeout: 3s</p>
+<blockquote>
+<p>设置集群中自动发现其它节点时ping连接超时时间，默认为3秒，对于比较差的网络环境可以高点的值来防止自动发现时出错。</p>
+</blockquote>
+<p>discovery.zen.ping.multicast.enabled: false</p>
+<blockquote>
+<p>设置是否打开多播发现节点，默认是true。</p>
+</blockquote>
+<p>discovery.zen.ping.unicast.hosts: [“host1”, “host2:port”, “host3[portX-portY]”]</p>
+<blockquote>
+<p>设置集群中master节点的初始列表，可以通过这些节点来自动发现新加入集群的节点。</p>
+</blockquote>
+<ul>
+<li>elasticsearch7版本引入的新集群协调子系统了解一哈,新增两个如下配置项<br>discovery 和cluster 设置，以便群集中的节点可以相互发现并选择主节点。</li>
+</ul>
+<p>discovery.seed_hosts</p>
+<blockquote>
+<p>设置提供群集中其他节点的列表，这些节点符合主要条件且可能是实时且可联系的，以便为发现过程设定种子。 此设置通常应包含群集中所有符合主节点的节点的地址。 此设置包含主机数组或逗号分隔的字符串。 每个值应采用host：port或host的形式</p>
+</blockquote>
+<p>cluster.initial_master_nodes</p>
+<blockquote>
+<p>当您第一次启动全新的Elasticsearch集群时，会出现一个集群引导步骤，该步骤确定在第一次选举中计票的主要合格节点集因此当您在生产模式下启动全新集群时，必须明确列出符合条件的节点的名称或IP地址，这些节点的投票应在第一次选举中计算 集群中第一个主节点启动 </p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/28/nginx生成请求id/" rel="next" title="nginx生成请求id">
+                <i class="fa fa-chevron-left"></i> nginx生成请求id
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/31/elasticsearch-searchguard/" rel="prev" title="elasticsearch-searchguard">
+                elasticsearch-searchguard <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">laugh</p>
+              <p class="site-description motion-element" itemprop="description">lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">laugh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

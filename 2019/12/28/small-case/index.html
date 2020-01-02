@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
+<meta name="description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta name="keywords" content="note,tools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="small-case">
 <meta property="og:url" content="http://liugaohua.github.io/2019/12/28/small-case/index.html">
 <meta property="og:site_name" content="Runnable">
-<meta property="og:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
+<meta property="og:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-28T09:15:29.192Z">
+<meta property="og:updated_time" content="2019-12-31T06:45:59.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="small-case">
-<meta name="twitter:description" content="ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
+<meta name="twitter:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 
 
 
@@ -320,15 +320,27 @@
       
 
       
-        <h3 id="ssh相关文件权限配置"><a href="#ssh相关文件权限配置" class="headerlink" title="ssh相关文件权限配置"></a>ssh相关文件权限配置</h3><p>chmod 700 -R .ssh #设置.ssh目录权限</p>
+        <h3 id="查看服务端口"><a href="#查看服务端口" class="headerlink" title="查看服务端口"></a>查看服务端口</h3><p>ss -taln<br>ss -ltp<br>-l = listen, -t = tcp, -p = show program name</p>
+<h3 id="ssh相关文件权限配置"><a href="#ssh相关文件权限配置" class="headerlink" title="ssh相关文件权限配置"></a>ssh相关文件权限配置</h3><p>chmod 700 -R .ssh #设置.ssh目录权限</p>
 <p>chmod 600. ssh/authorized_keys</p>
 <p>chmod 400 私钥</p>
 <p>使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式</p>
 <a id="more"></a>
 <h4 id="根据私钥读取公钥"><a href="#根据私钥读取公钥" class="headerlink" title="根据私钥读取公钥"></a>根据私钥读取公钥</h4><p>sh-keygen -y -f &lt;path/to/private_key&gt; &gt; &lt;path/to/public_key&gt;<br>-y Read private key file and print public key<br>-y 的意思是读取私钥并将公钥打印出来</p>
 <h4 id="用户相关"><a href="#用户相关" class="headerlink" title="用户相关"></a>用户相关</h4><p>修改用户sh<br>usermod -s /bin/bash kaifa</p>
+<ul>
+<li>/bin/false什么也不做只是返回一个错误状态,然后立即退出。将用户的shell设置为/bin/false,用户会无法登录,并且不会有任何提示。</li>
+<li>/usr/sbin/nologin<br>nologin会礼貌的向用户显示一条信息,并拒绝用户登录:<br>This account is currently not available.<br>有一些软件,比如一些ftp服务器软件,对于本地非虚拟账户,只有用户有有效的shell才能使用ftp服务。这时候就可以使用nologin使用户即不能登录系统,还能使用一些系统服务,比如ftp服务。/bin/false则不行,这是二者的重要区别之一。</li>
+<li>/etc/nologin<br>如果存在/etc/nologin文件,则系统只允许root用户登录,其他用户全部被拒绝登录,并向他们显示/etc/nologin文件的内容。</li>
+</ul>
 <p>删除用户<br> rm -rf /var/spool/mail/user1<br> rm -rf /home/user1<br>userdel -r user1    这样可以完全删除用户的家目录，邮箱目录等。</p>
 <h4 id="随机密码生成"><a href="#随机密码生成" class="headerlink" title="随机密码生成"></a>随机密码生成</h4><p>openssl rand -base64 10|tr A-Z a-z</p>
+<h4 id="visudo修改编辑器vim"><a href="#visudo修改编辑器vim" class="headerlink" title="visudo修改编辑器vim"></a>visudo修改编辑器vim</h4><p>update-alternatives –config editor</p>
+<h4 id="nologin用户"><a href="#nologin用户" class="headerlink" title="nologin用户"></a>nologin用户</h4><p>在linux中建立网站时，我们一般分配一个www之类的用户给网站应用程序。<br>如果我们使用root或者具有管理员权限的账号在网站目录下去创建文件时，会遇到各种权限问题。<br>这时我们可以切换到www用户，这类用户一般是nologin，不允许登录。<br>如果我们su www或者sudo www,切换到www用户时，会出错。<br>网上解决办法时修改/etc/passwd文件 nologin改为bin/bash，这样www用户可以登录服务器，<br>比较危险。可以通过以下办法使用www用户执行命令<br>方法1. 为了安全，使用nologin账号来运行程序，<br>su -s /bin/bash -c “ls” www<br>这条命令到底做了什么呢？su -s 是指定shell，这里www用户是nologin用户，是没有默认的shell的，这里指定使用/bin/bash, -c 后面接需要运行的命令， 后面www是用www用户来运行<br>方法2：<br>sudo -u www command 这样也可以使用www用户来执行命令</p>
+<h4 id="回收站工具"><a href="#回收站工具" class="headerlink" title="回收站工具"></a>回收站工具</h4><p>现在我们来安装 trash-cli加入我们使用 CentOS，Fedora，Ubuntu等主流操作系统，我们可以直接使用软件包管理命令安装如</p>
+<p>安装trash-cli工具，其实就是回收站的命令行模式：</p>
+<p>sudo apt-get install trash-cli</p>
+<p>如果是centos系统<br>sudo yum install -y trash-cli</p>
 
       
     </div>
@@ -359,8 +371,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/04/elasticsearch-常用/" rel="next" title="elasticsearch-常用">
-                <i class="fa fa-chevron-left"></i> elasticsearch-常用
+              <a href="/2019/12/28/elasticserach-install/" rel="next" title="elasticsearch-install">
+                <i class="fa fa-chevron-left"></i> elasticsearch-install
               </a>
             
           </div>
@@ -369,8 +381,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/28/elasticserach-install/" rel="prev" title="elasticsearch-install">
-                elasticsearch-install <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/28/nginx-logstash/" rel="prev" title="nginx-logstash">
+                nginx-logstash <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -448,7 +460,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -503,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">1.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">1.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">1.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">1.3.</span> <span class="nav-text">随机密码生成</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -523,7 +535,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
