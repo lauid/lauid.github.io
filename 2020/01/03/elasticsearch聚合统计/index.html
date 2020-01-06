@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="elasticsearch,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Elasticsearch的Aggregation功能也异常强悍。 Aggregation共分为三种：Metric Aggregations、Bucket Aggregations、 Pipeline Aggregations。下面将分别进行总结。">
+<meta name="keywords" content="elasticsearch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elasticsearch聚合统计">
+<meta property="og:url" content="http://liugaohua.github.io/2020/01/03/elasticsearch聚合统计/index.html">
+<meta property="og:site_name" content="Runnable">
+<meta property="og:description" content="Elasticsearch的Aggregation功能也异常强悍。 Aggregation共分为三种：Metric Aggregations、Bucket Aggregations、 Pipeline Aggregations。下面将分别进行总结。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-03T02:18:32.554Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elasticsearch聚合统计">
+<meta name="twitter:description" content="Elasticsearch的Aggregation功能也异常强悍。 Aggregation共分为三种：Metric Aggregations、Bucket Aggregations、 Pipeline Aggregations。下面将分别进行总结。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liugaohua.github.io/2020/01/03/elasticsearch聚合统计/">
+
+
+
+
+
+  <title>elasticsearch聚合统计 | Runnable</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6a35fff8f36aebd9be09e2be88ef1e09";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runnable</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">strong to refuse</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/01/03/elasticsearch聚合统计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">elasticsearch聚合统计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-03T10:08:02+08:00">
+                2020-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Elasticsearch的Aggregation功能也异常强悍。</p>
+<p>Aggregation共分为三种：Metric Aggregations、Bucket Aggregations、 Pipeline Aggregations。下面将分别进行总结。</p>
+<a id="more"></a>
+<p>以下所有内容都来自官网：</p>
+<p>官网（权威）：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-avg-aggregation.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-avg-aggregation.html</a></p>
+<p>#########################################</p>
+<h4 id="1、Metric-Aggregations"><a href="#1、Metric-Aggregations" class="headerlink" title="1、Metric Aggregations"></a>1、Metric Aggregations</h4><h5 id="1-gt-Avg-Aggregation-计算出字段平均值"><a href="#1-gt-Avg-Aggregation-计算出字段平均值" class="headerlink" title="1&gt;Avg Aggregation  #计算出字段平均值"></a>1&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-avg-aggregation.html" target="_blank" rel="noopener">Avg Aggregation</a>  #计算出字段平均值</h5><p>{<br>    “aggs” : {<br>        “avg_grade” : { “avg” : { “field” : “grade” } }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “avg_grade”: {<br>      “avg”: {<br>        “field”: “grade”<br>      }<br>    }<br>  }<br>}</p>
+<p>参数：search_type=count 表示只返回aggregation部分的结果。</p>
+<h5 id="2-gt-Cardinality-Aggregation-计算出字段的唯一值。相当于sql中的distinct"><a href="#2-gt-Cardinality-Aggregation-计算出字段的唯一值。相当于sql中的distinct" class="headerlink" title="2&gt;Cardinality Aggregation  #计算出字段的唯一值。相当于sql中的distinct"></a>2&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-cardinality-aggregation.html" target="_blank" rel="noopener">Cardinality Aggregation</a>  #计算出字段的唯一值。相当于sql中的distinct</h5><blockquote>
+<p>cardinality 度量是一个近似算法。 它是基于 HyperLogLog++ （HLL）算法的。 HLL 会先对我们的输入作哈希运算，然后根据哈希运算的结果中的 bits 做概率估算从而得到基数。<br>优点：性能快，亿级别的记录在1秒内完成<br>缺点：存在只能保证最大40000条记录内的精确，超过的存在5%的误差，不适合需要精确去重场景</p>
+</blockquote>
+<p>{<br>    “aggs” : {<br>        “author_count” : {<br>            “cardinality” : {<br>                “field” : “author”<br>            }<br>        }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “author_count”: {<br>      “cardinality”: {<br>        “field”: “author”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="3-gt-Extended-Stats-Aggregation-字段的其他属性，包括最大最小，方差等等。"><a href="#3-gt-Extended-Stats-Aggregation-字段的其他属性，包括最大最小，方差等等。" class="headerlink" title="3&gt;Extended Stats Aggregation #字段的其他属性，包括最大最小，方差等等。"></a>3&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-extendedstats-aggregation.html" target="_blank" rel="noopener">Extended Stats Aggregation</a> #字段的其他属性，包括最大最小，方差等等。</h5><p>{<br>    “aggs” : {<br>        “grades_stats” : { “extended_stats” : { “field” : “grade” } }<br>    }<br>}</p>
+<p>例子：GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “grades_stats”: {<br>      “extended_stats”: {<br>        “field”: “grade”<br>      }<br>    }<br>  }<br>}</p>
+<p>返回值：</p>
+<p>{<br>    …</p>
+<pre><code>&quot;aggregations&quot;: {
+    &quot;grade_stats&quot;: {
+       &quot;count&quot;: 9,
+       &quot;min&quot;: 72,
+       &quot;max&quot;: 99,
+       &quot;avg&quot;: 86,
+       &quot;sum&quot;: 774,
+       &quot;sum_of_squares&quot;: 67028,
+       &quot;variance&quot;: 51.55555555555556,
+       &quot;std_deviation&quot;: 7.180219742846005,
+       &quot;std_deviation_bounds&quot;: {
+        &quot;upper&quot;: 100.36043948569201,
+        &quot;lower&quot;: 71.63956051430799
+       }
+    }
+}
+</code></pre><p>}</p>
+<h5 id="4-gt-Geo-Bounds-Aggregation-计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。"><a href="#4-gt-Geo-Bounds-Aggregation-计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。" class="headerlink" title="4&gt;Geo Bounds Aggregation #计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。"></a>4&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-geobounds-aggregation.html" target="_blank" rel="noopener">Geo Bounds Aggregation</a> #计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。</h5><p>{<br>    “query” : {<br>        “match” : { “business_type” : “shop” }<br>    },<br>    “aggs” : {<br>        “viewport” : {<br>            “geo_bounds” : {<br>                “field” : “location”,<br>                “wrap_longitude” : true<br>            }<br>        }<br>    }<br>}</p>
+<p>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “viewport”: {<br>      “geo_bounds”: {<br>        “field”: “location”,<br>        “wrap_longitude”: true<br>      }<br>    }<br>  }<br>}</p>
+<p>返回值：</p>
+<p>{<br>    …</p>
+<pre><code>&quot;aggregations&quot;: {
+    &quot;viewport&quot;: {
+        &quot;bounds&quot;: {
+            &quot;top_left&quot;: {
+                &quot;lat&quot;: 80.45,
+                &quot;lon&quot;: -160.22
+            },
+            &quot;bottom_right&quot;: {
+                &quot;lat&quot;: 40.65,
+                &quot;lon&quot;: 42.57
+            }
+        }
+    }
+}
+</code></pre><p>}</p>
+<p>注释：这个矩形区域左上角坐标，和右下角坐标已经给出。也就是说你查出来的数据将会都落在这个地理范围内。</p>
+<h5 id="5-gt-Geo-Centroid-Aggregation-计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。"><a href="#5-gt-Geo-Centroid-Aggregation-计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。" class="headerlink" title="5&gt;Geo Centroid Aggregation   #计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。"></a>5&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-geocentroid-aggregation.html" target="_blank" rel="noopener">Geo Centroid Aggregation</a>   #计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。</h5><p>{<br>    “query” : {<br>        “match” : { “crime” : “burglary” }<br>    },<br>    “aggs” : {<br>        “centroid” : {<br>            “geo_centroid” : {<br>                “field” : “location”<br>            }<br>        }<br>    }<br>}</p>
+<p>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “centroid”: {<br>      “geo_centroid”: {<br>        “field”: “location”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="6-gt-Max-Aggregation-求最大值"><a href="#6-gt-Max-Aggregation-求最大值" class="headerlink" title="6&gt;Max Aggregation  #求最大值"></a>6&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-max-aggregation.html" target="_blank" rel="noopener">Max Aggregation</a>  #求最大值</h5><p>{<br>    “aggs” : {<br>        “max_price” : { “max” : { “field” : “price” } }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “max_price”: {<br>      “max”: {<br>        “field”: “price”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="7-gt-Min-Aggregation-求最小值"><a href="#7-gt-Min-Aggregation-求最小值" class="headerlink" title="7&gt;Min Aggregation #求最小值"></a>7&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-min-aggregation.html" target="_blank" rel="noopener">Min Aggregation</a> #求最小值</h5><p>{<br>    “aggs” : {<br>        “min_price” : { “min” : { “field” : “price” } }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “min_price”: {<br>      “min”: {<br>        “field”: “price”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="8-gt-Percentiles-Aggregation-百分比统计。可以看出你网站的所有页面。加载时间的差异。"><a href="#8-gt-Percentiles-Aggregation-百分比统计。可以看出你网站的所有页面。加载时间的差异。" class="headerlink" title="8&gt;Percentiles Aggregation #百分比统计。可以看出你网站的所有页面。加载时间的差异。"></a>8&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-percentile-aggregation.html" target="_blank" rel="noopener">Percentiles Aggregation</a> #百分比统计。可以看出你网站的所有页面。加载时间的差异。</h5><p>{<br>    “aggs” : {<br>        “load_time_outlier” : {<br>            “percentiles” : {<br>                “field” : “load_time”<br>            }<br>        }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “load_time_outlier”: {<br>      “percentiles”: {<br>        “field”: “load_time”<br>      }<br>    }<br>  }<br>}</p>
+<p>返回：可以看出这个网站75%页面在29毫秒左右就加载完毕了。有5%的页面超过了60毫秒。</p>
+<p>{<br>    …</p>
+<p>   “aggregations”: {<br>      “load_time_outlier”: {<br>         “values” : {<br>            “1.0”: 15,<br>            “5.0”: 20,<br>            “25.0”: 23,<br>            “50.0”: 25,<br>            “75.0”: 29,<br>            “95.0”: 60,<br>            “99.0”: 150<br>         }<br>      }<br>   }<br>}</p>
+<h5 id="9-gt-Percentile-Ranks-Aggregation-看看15毫秒和30毫秒内大概有多少页面加载完。"><a href="#9-gt-Percentile-Ranks-Aggregation-看看15毫秒和30毫秒内大概有多少页面加载完。" class="headerlink" title="9&gt;Percentile Ranks Aggregation #看看15毫秒和30毫秒内大概有多少页面加载完。"></a>9&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-percentile-rank-aggregation.html" target="_blank" rel="noopener">Percentile Ranks Aggregation</a> #看看15毫秒和30毫秒内大概有多少页面加载完。</h5><p>{<br>    “aggs” : {<br>        “load_time_outlier” : {<br>            “percentile_ranks” : {<br>                “field” : “load_time”,<br>                “values” : [15, 30]<br>            }<br>        }<br>    }<br>}</p>
+<p>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “load_time_outlier”: {<br>      “percentile_ranks”: {<br>        “field”: “load_time”,<br>        “values”: [<br>          15,<br>          30<br>        ]<br>      }<br>    }<br>  }<br>}</p>
+<p>返回：看出15毫秒时大概92%页面加载完毕。30毫秒时基本都加载完成。</p>
+<p>{<br>    …</p>
+<p>   “aggregations”: {<br>      “load_time_outlier”: {<br>         “values” : {<br>            “15”: 92,<br>            “30”: 100<br>         }<br>      }<br>   }<br>}</p>
+<h5 id="10-gt-Stats-Aggregation-最大、最小、和、平均值。一起求出来"><a href="#10-gt-Stats-Aggregation-最大、最小、和、平均值。一起求出来" class="headerlink" title="10&gt;Stats Aggregation  #最大、最小、和、平均值。一起求出来"></a>10&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-stats-aggregation.html" target="_blank" rel="noopener">Stats Aggregation</a>  #最大、最小、和、平均值。一起求出来</h5><p>{<br>    “aggs” : {<br>        “grades_stats” : { “stats” : { “field” : “grade” } }<br>    }<br>}</p>
+<p>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “grades_stats”: {<br>      “stats”: {<br>        “field”: “grade”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="11-gt-Sum-Aggregation-求和"><a href="#11-gt-Sum-Aggregation-求和" class="headerlink" title="11&gt;Sum Aggregation #求和"></a>11&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-sum-aggregation.html" target="_blank" rel="noopener">Sum Aggregation</a> #求和</h5><p> “aggs” : {<br>        “intraday_return” : { “sum” : { “field” : “change” } }<br>    }<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “intraday_return”: {<br>      “sum”: {<br>        “field”: “change”<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="12-gt-Top-hits-Aggregation-较为常用的统计。获取到每组前n条数据。相当于sql-中-group-by-后取出前n条。"><a href="#12-gt-Top-hits-Aggregation-较为常用的统计。获取到每组前n条数据。相当于sql-中-group-by-后取出前n条。" class="headerlink" title="12&gt;Top hits Aggregation  #较为常用的统计。获取到每组前n条数据。相当于sql 中 group by 后取出前n条。"></a>12&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-top-hits-aggregation.html" target="_blank" rel="noopener">Top hits Aggregation</a>  #较为常用的统计。获取到每组前n条数据。相当于sql 中 group by 后取出前n条。</h5><p>{<br>    “aggs”: {<br>        “top-tags”: {<br>            “terms”: {<br>                “field”: “tags”,<br>                “size”: 3<br>            },<br>            “aggs”: {<br>                “top_tag_hits”: {<br>                    “top_hits”: {<br>                        “sort”: [<br>                            {<br>                                “last_activity_date”: {<br>                                    “order”: “desc”<br>                                }<br>                            }<br>                        ],<br>                        “_source”: {<br>                            “include”: [<br>                                “title”<br>                            ]<br>                        },<br>                        “size” : 1<br>                    }<br>                }<br>            }<br>        }<br>    }<br>}<br>例子：取100组，每组只要第一条。为了见bain没用order和_source，请自行测试他们。</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “all_interests”: {<br>      “terms”: {<br>        “field”: “zxw_id”,<br>        “size”: 100<br>      },<br>      “aggs”: {<br>        “top_tag_hits”: {<br>          “top_hits”: {<br>            “size”: 1<br>          }<br>        }<br>      }<br>    }<br>  }<br>}</p>
+<h5 id="14-gt-Value-Count-Aggregation-数量统计，看看这个字段一共有多少个不一样的数值。"><a href="#14-gt-Value-Count-Aggregation-数量统计，看看这个字段一共有多少个不一样的数值。" class="headerlink" title="14&gt;Value Count Aggregation  #数量统计，看看这个字段一共有多少个不一样的数值。"></a>14&gt;<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-metrics-valuecount-aggregation.html" target="_blank" rel="noopener">Value Count Aggregation</a>  #数量统计，看看这个字段一共有多少个不一样的数值。</h5><p>{<br>    “aggs” : {<br>        “grades_count” : { “value_count” : { “field” : “grade” } }<br>    }<br>}<br>例子：</p>
+<p>GET index/type/_search?search_type=count<br>{<br>  “query”: {<br>    “match_all”: {}<br>  },<br>  “aggs”: {<br>    “grades_count”: {<br>      “value_count”: {<br>        “field”: “grade”<br>      }<br>    }<br>  }<br>}</p>
+<h4 id="2、Bucket-Aggregations-这是第二种类型的统计（用的也是最多的，最实用的。）"><a href="#2、Bucket-Aggregations-这是第二种类型的统计（用的也是最多的，最实用的。）" class="headerlink" title="2、Bucket Aggregations 这是第二种类型的统计（用的也是最多的，最实用的。）"></a>2、<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-bucket.html" target="_blank" rel="noopener">Bucket Aggregations</a> 这是第二种类型的统计（用的也是最多的，最实用的。）</h4><p>网站：<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-bucket-children-aggregation.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-bucket-children-aggregation.html</a></p>
+<h4 id="3、Pipeline-Aggregations-这是第三中类型的聚合。"><a href="#3、Pipeline-Aggregations-这是第三中类型的聚合。" class="headerlink" title="3、Pipeline Aggregations #这是第三中类型的聚合。"></a>3、<a href="https://www.elastic.co/guide/en/elasticsearch/reference/2.4/search-aggregations-bucket.html" target="_blank" rel="noopener">Pipeline Aggregations</a> #这是第三中类型的聚合。</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/02/openvpn搭建私有网络/" rel="next" title="openvpn搭建私有网络">
+                <i class="fa fa-chevron-left"></i> openvpn搭建私有网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/04/ubuntu-install-golang/" rel="prev" title="ubuntu-install-golang">
+                ubuntu-install-golang <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">laugh</p>
+              <p class="site-description motion-element" itemprop="description">lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、Metric-Aggregations"><span class="nav-number">1.</span> <span class="nav-text">1、Metric Aggregations</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-gt-Avg-Aggregation-计算出字段平均值"><span class="nav-number">1.1.</span> <span class="nav-text">1&gt;Avg Aggregation  #计算出字段平均值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-gt-Cardinality-Aggregation-计算出字段的唯一值。相当于sql中的distinct"><span class="nav-number">1.2.</span> <span class="nav-text">2&gt;Cardinality Aggregation  #计算出字段的唯一值。相当于sql中的distinct</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-gt-Extended-Stats-Aggregation-字段的其他属性，包括最大最小，方差等等。"><span class="nav-number">1.3.</span> <span class="nav-text">3&gt;Extended Stats Aggregation #字段的其他属性，包括最大最小，方差等等。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-gt-Geo-Bounds-Aggregation-计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。"><span class="nav-number">1.4.</span> <span class="nav-text">4&gt;Geo Bounds Aggregation #计算出所有的地理坐标将会落在一个矩形区域。比如说朝阳区域有很多饭店，我就可以用一个矩形把这些饭店都圈起来，看看范围。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-gt-Geo-Centroid-Aggregation-计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。"><span class="nav-number">1.5.</span> <span class="nav-text">5&gt;Geo Centroid Aggregation   #计算出所有文档的大概的中心点。比如说某个地区盗窃犯罪很多，那我这样就可以看到这片区域到底哪个点（街道）偷盗事件最猖狂。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-gt-Max-Aggregation-求最大值"><span class="nav-number">1.6.</span> <span class="nav-text">6&gt;Max Aggregation  #求最大值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-gt-Min-Aggregation-求最小值"><span class="nav-number">1.7.</span> <span class="nav-text">7&gt;Min Aggregation #求最小值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-gt-Percentiles-Aggregation-百分比统计。可以看出你网站的所有页面。加载时间的差异。"><span class="nav-number">1.8.</span> <span class="nav-text">8&gt;Percentiles Aggregation #百分比统计。可以看出你网站的所有页面。加载时间的差异。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-gt-Percentile-Ranks-Aggregation-看看15毫秒和30毫秒内大概有多少页面加载完。"><span class="nav-number">1.9.</span> <span class="nav-text">9&gt;Percentile Ranks Aggregation #看看15毫秒和30毫秒内大概有多少页面加载完。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10-gt-Stats-Aggregation-最大、最小、和、平均值。一起求出来"><span class="nav-number">1.10.</span> <span class="nav-text">10&gt;Stats Aggregation  #最大、最小、和、平均值。一起求出来</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11-gt-Sum-Aggregation-求和"><span class="nav-number">1.11.</span> <span class="nav-text">11&gt;Sum Aggregation #求和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12-gt-Top-hits-Aggregation-较为常用的统计。获取到每组前n条数据。相当于sql-中-group-by-后取出前n条。"><span class="nav-number">1.12.</span> <span class="nav-text">12&gt;Top hits Aggregation  #较为常用的统计。获取到每组前n条数据。相当于sql 中 group by 后取出前n条。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14-gt-Value-Count-Aggregation-数量统计，看看这个字段一共有多少个不一样的数值。"><span class="nav-number">1.13.</span> <span class="nav-text">14&gt;Value Count Aggregation  #数量统计，看看这个字段一共有多少个不一样的数值。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、Bucket-Aggregations-这是第二种类型的统计（用的也是最多的，最实用的。）"><span class="nav-number">2.</span> <span class="nav-text">2、Bucket Aggregations 这是第二种类型的统计（用的也是最多的，最实用的。）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、Pipeline-Aggregations-这是第三中类型的聚合。"><span class="nav-number">3.</span> <span class="nav-text">3、Pipeline Aggregations #这是第三中类型的聚合。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">laugh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

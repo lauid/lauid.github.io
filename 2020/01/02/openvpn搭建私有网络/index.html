@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="OpenVPN是一个用于创建虚拟专用网络加密通道的软件包，最早由James Yonan编写。OpenVPN允许创建的VPN使用公开密钥、电子证书、或者用户名／密码来进行身份验证。它大量使用了OpenSSL加密库中的SSLv3/TLSv1协议函数库。目前OpenVPN能在Solaris、Linux、OpenBSD、FreeBSD、NetBSD、Mac OS X与Microsoft Windows以及">
+<meta property="og:type" content="article">
+<meta property="og:title" content="openvpn搭建私有网络">
+<meta property="og:url" content="http://liugaohua.github.io/2020/01/02/openvpn搭建私有网络/index.html">
+<meta property="og:site_name" content="Runnable">
+<meta property="og:description" content="OpenVPN是一个用于创建虚拟专用网络加密通道的软件包，最早由James Yonan编写。OpenVPN允许创建的VPN使用公开密钥、电子证书、或者用户名／密码来进行身份验证。它大量使用了OpenSSL加密库中的SSLv3/TLSv1协议函数库。目前OpenVPN能在Solaris、Linux、OpenBSD、FreeBSD、NetBSD、Mac OS X与Microsoft Windows以及">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-03T02:18:20.767Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="openvpn搭建私有网络">
+<meta name="twitter:description" content="OpenVPN是一个用于创建虚拟专用网络加密通道的软件包，最早由James Yonan编写。OpenVPN允许创建的VPN使用公开密钥、电子证书、或者用户名／密码来进行身份验证。它大量使用了OpenSSL加密库中的SSLv3/TLSv1协议函数库。目前OpenVPN能在Solaris、Linux、OpenBSD、FreeBSD、NetBSD、Mac OS X与Microsoft Windows以及">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liugaohua.github.io/2020/01/02/openvpn搭建私有网络/">
+
+
+
+
+
+  <title>openvpn搭建私有网络 | Runnable</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6a35fff8f36aebd9be09e2be88ef1e09";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runnable</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">strong to refuse</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/01/02/openvpn搭建私有网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">openvpn搭建私有网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-02T16:28:07+08:00">
+                2020-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>OpenVPN是一个用于创建虚拟专用网络加密通道的软件包，最早由James Yonan编写。OpenVPN允许创建的VPN使用公开密钥、电子证书、或者用户名／密码来进行身份验证。<br>它大量使用了OpenSSL加密库中的SSLv3/TLSv1协议函数库。<br>目前OpenVPN能在Solaris、Linux、OpenBSD、FreeBSD、NetBSD、Mac OS X与Microsoft Windows以及Android和iOS上运行，并包含了许多安全性的功能。它并不是一个基于Web的VPN软件，也不与IPsec及其他VPN软件包兼容。</p>
+<a id="more"></a>
+<h3 id="第一步、为vps安装openvpn及所有所需软件"><a href="#第一步、为vps安装openvpn及所有所需软件" class="headerlink" title="第一步、为vps安装openvpn及所有所需软件"></a>第一步、为vps安装openvpn及所有所需软件</h3><p>安装EPEL仓库<br>wget <a href="http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm" target="_blank" rel="noopener">http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm</a><br>rpm -Uvh epel-release-6-8.noarch.rpm<br>安装openvpn<br>yum install openvpn<br>安装openvpn最新的easy-rsa，该包用来制作ca证书，服务端证书，客户端证书。最新的为easy-rsa3<br>wget <a href="https://github.com/OpenVPN/easy-rsa/archive/master.zip" target="_blank" rel="noopener">https://github.com/OpenVPN/easy-rsa/archive/master.zip</a><br>unzip master.zip<br>将解压得到的文件夹easy-rsa-master重命名为easy-rsa<br>mv easy-rsa-master/ easy-rsa/<br>然后将的到的easy-ras文件夹复制到/etc/openvpn/目录下<br>cp -R easy-rsa/ /etc/openvpn/</p>
+<h3 id="第二步、编辑vars文件，根据自己环境配置"><a href="#第二步、编辑vars文件，根据自己环境配置" class="headerlink" title="第二步、编辑vars文件，根据自己环境配置"></a>第二步、编辑vars文件，根据自己环境配置</h3><p>A：先进入/etc/openvpn/easy-rsa/easyrsa3目录<br>cd /etc/openvpn/easy-rsa/easyrsa3/<br>B：复制vars.example 为vars<br>cp vars.example vars<br>C：修改下面字段，命令：vi vars，然后修改，最后wq保存<br>set_var EASYRSA_REQ_COUNTRY “CN” //根据自己情况更改<br>set_var EASYRSA_REQ_PROVINCE “Beijing”<br>set_var EASYRSA_REQ_CITY “Tong”<br>set_var EASYRSA_REQ_ORG “qingliu Certificate”<br>set_var EASYRSA_REQ_EMAIL “<a href="mailto:shuiqingliu14@gmail.com" target="_blank" rel="noopener">shuiqingliu14@gmail.com</a>”<br>set_var EASYRSA_REQ_OU “My OpenVPN”</p>
+<h3 id="第三步、创建服务端证书及key"><a href="#第三步、创建服务端证书及key" class="headerlink" title="第三步、创建服务端证书及key"></a>第三步、创建服务端证书及key</h3><ul>
+<li>./easyrsa init-pki</li>
+</ul>
+<p>创建根证书</p>
+<ul>
+<li>./easyrsa build-ca</li>
+</ul>
+<p>如下:</p>
+<blockquote>
+<p>Generating a 2048 bit RSA private key<br>…………………………………….+++<br>……+++<br>writing new private key to ‘/root/easy-rsa/easyrsa3/pki/private/ca.key’<br>Enter PEM pass phrase:<br>Verifying – Enter PEM pass phrase:<br>—–<br>You are about to be asked to enter information that will be incorporated<br>into your certificate request.<br>What you are about to enter is what is called a Distinguished Name or a DN.<br>There are quite a few fields but you can leave some blank<br>For some fields there will be a default value,<br>If you enter ‘.’, the field will be left blank.<br>—–<br>Common Name (eg: your user, host, or server name) [Easy-RSA CA]:qingliu<br>CA creation complete and you may now import and sign cert requests.<br>Your new CA certificate file for publishing is at:<br>/root/easy-rsa/easyrsa3/pki/ca.crt<br>注意：在上述部分需要输入PEM密码 PEM pass phrase，输入两次，此密码必须记住，不然以后不能为证书签名。还需要输入common name 通用名，这个你自己随便设置个独一无二的。<br>eg:Common Name (eg: your user, host, or server name) [Easy-RSA CA]:qingliu</p>
+</blockquote>
+<p>###我输入qingliu</p>
+<p>创建服务器端证书<br>./easyrsa gen-req server nopass<br>如下：<br>[root@localhost easyrsa3]# ./easyrsa gen-req server nopass<br>Generating a 2048 bit RSA private key<br>……………………………………………………………………..+++<br>……………………+++<br>writing new private key to ‘/root/easy-rsa/easyrsa3/pki/private/server.key’<br>—–<br>You are about to be asked to enter information that will be incorporated<br>into your certificate request.<br>What you are about to enter is what is called a Distinguished Name or a DN.<br>There are quite a few fields but you can leave some blank<br>For some fields there will be a default value,<br>If you enter ‘.’, the field will be left blank.<br>—–<br>Common Name (eg: your user, host, or server name) [server]:shuiqingliu<br>Keypair and certificate request completed. Your files are:<br>req: /root/easy-rsa/easyrsa3/pki/reqs/server.req<br>key: /root/easy-rsa/easyrsa3/pki/private/server.key<br>该过程中需要输入common name，随意但是不要跟之前的根证书的一样<br>签约服务端证书：<br>./easyrsa sign server server<br>如下:<br>You are about to sign the following certificate.<br>Please check over the details shown below for accuracy. Note that this request<br>has not been cryptographically verified. Please be sure it came from a trusted<br>source or that you have verified the request checksum with the sender.<br>Request subject, to be signed as a server certificate for 3650 days:<br>subject=<br>commonName = shuiqingliu<br>Type the word ‘yes’ to continue, or any other input to abort.<br>Confirm request details: yes<br>Using configuration from /root/easy-rsa/easyrsa3/openssl-1.0.cnf<br>Enter pass phrase for /root/easy-rsa/easyrsa3/pki/private/ca.key:<br>Check that the request matches the signature<br>Signature ok<br>The Subject’s Distinguished Name is as follows<br>commonName<br>RINTABLE:’shuiqingliu’<br>Certificate is to be certified until Apr 20 06:02:10 2024 GMT (3650 days)<br>Write out database with 1 new entries<br>Data Base Updated<br>Certificate created at: /root/easy-rsa/easyrsa3/pki/issued/server.crt<br>该命令中.需要你确认生成，要输入yes，还需要你提供我们当时创建CA时候的密码。如果你忘记了密码，那你就重头开始再来一次吧。<br>创建Diffie-Hellman，确保key穿越不安全网络的命令：<br>./easyrsa gen-dh<br>如下：<br>Note: using Easy-RSA configuration from: ./vars<br>Generating DH parameters, 2048 bit long safe prime, generator 2<br>This is going to take a long time<br>……..+……………………………….+..+…………………………………………………………………………………………………………………………….<br>DH parameters of size 2048 created at /etc/openvpn/easy-rsa/easyrsa3/pki/dh.pem<br>第四步、创建客户端证书<br>进入root目录新建client文件夹，文件夹可随意命名，然后拷贝前面解压得到的easy-ras文件夹到client文件夹,进入下列目录<br>cd /root/<br>mkdir client &amp;&amp; cd client<br>cp -R easy-rsa/ client/<br>cd client/easy-rsa/easyrsa3/<br>初始化<br>./easyrsa init-pki<br>创建客户端key及生成证书（记住生成是自己输入的密码）<br>./easyrsa gen-req qingliu //名字自己定义<br>将的到的qingliu.req导入然后签约证书<br>进入到/etc/openvpn/easy-rsa/easyrsa3/<br>cd /etc/openvpn/easy-rsa/easyrsa3/<br>导入req<br>./easyrsa import-req /root/client/easy-rsa/easyrsa3/pki/reqs/qingliu.req qingliu<br>签约证书<br>./easyrsa sign client qingliu<br>//这里生成client所以必须为client，qingliu要与之前导入名字一致<br>上面签约证书跟server类似，就不截图了，但是期间还是要输入CA的密码<br>这步很重要，现在说一下我们上面都生成了什么东西<br>/etc/openvpn/easy-rsa/easyrsa3/pki/ca.crt<br>/etc/openvpn/easy-rsa/easyrsa3/pki/reqs/server.req<br>/etc/openvpn/easy-rsa/easyrsa3/pki/reqs/qingliu.req<br>/etc/openvpn/easy-rsa/easyrsa3/pki/private/ca.key<br>/etc/openvpn/easy-rsa/easyrsa3/pki/private/server.key<br>/etc/openvpn/easy-rsa/easyrsa3/pki/issued/server.crt<br>/etc/openvpn/easy-rsa/easyrsa3/pki/issued/qingliu.crt<br>/etc/openvpn/easy-rsa/easyrsa3/pki/dh.pem<br>客户端：(root/client/easy-rsa文件夹)<br>/root/client/easy-rsa/easyrsa3/pki/private/qingliu.key<br>/root/client/easy-rsa/easyrsa3/pki/reqs/qingliu.req //这个文件被我们导入到了服务端文件所以那里也有<br>这一步就是拷贝这些文件放入到相应位置。将下列文件放到/etc/openvpn/ 目录执行命令：<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/ca.crt /etc/openvpn<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/private/server.key /etc/openvpn<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/issued/server.crt /etc/openvpn<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/dh.pem /etc/openvpn<br>这样就将上述四个文件放入到了/etc/openvpn目录下<br>b.这一步将下列文件放到/root/client 目录下执行命令：<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/ca.crt /root/client<br>cp /etc/openvpn/easy-rsa/easyrsa3/pki/issued/qingliu.crt /root/client<br>cp /root/client/easy-rsa/easyrsa3/pki/private/qingliu.key /root/client<br>这样就将上述三个文件复制到了/root/client目录，包括：ca.crt、qingliu.crt、qingliu.key<br>第五步、为服务端编写配置文件<br>当你安装好了openvpn时候，他会提供一个server配置的文件例子，在/usr/share/doc/openvpn-2.3.2/sample/sample-config-files下会有一个server.conf文件，我们将这个文件复制到/etc/openvpn<br>cp /usr/share/doc/openvpn-2.3.2/sample/sample-config-files/server.conf /etc/openvpn<br>然后修改配置vi server.conf如下：<br>local 192.227.161.xx（跟自己vps IP）<br>port 1194<br>proto udp<br>dev tun<br>ca /etc/openvpn/ca.crt<br>cert /etc/openvpn/server.crt<br>key /etc/openvpn/server.key # This file should be kept secret<br>dh /etc/openvpn/dh.pem<br>server 10.8.0.0 255.255.255.0<br>ifconfig-pool-persist ipp.txt<br>push “redirect-gateway def1 bypass-dhcp”<br>push “dhcp-option DNS 8.8.8.8″<br>keepalive 10 120<br>comp-lzo<br>max-clients 100<br>persist-key<br>persist-tun<br>status openvpn-status.log<br>verb 3<br>每个项目都会由一大堆介绍,上述修改，openvpn提供的server.conf已经全部提供，我们只需要去掉前面的注释#，然后修改我们自己的有关配置。<br>第六步、下载openvpn客户端，并进行配置<br>用sftp将我们在vps生成的客户端证书和key下载到客户端电脑<br>ca.crt qingliu.crt qingliu.key //这三个文件<br>去官网下载openvpn客户端进行安装，然后安装目录找到simple-config<br>D:\Program Files\OpenVPN\sample-config\client.ovpn<br>将client.ovpn 复制到D:\Program Files\OpenVPN\config下，当然我把客户端装在了D盘你根据自己情况选择.<br>将下载到的三个文件放入D:\Program Files\OpenVPN\config<br>编辑配置文件：<br>client<br>dev tun<br>proto udp<br>remote 192.227.161.xx 1194 //主要这里修改成自己vps ip<br>resolv-retry infinite<br>nobind<br>persist-key<br>persist-tun<br>ca ca.crt //这里需要证书<br>cert qingliu.crt<br>key qingliu.key<br>comp-lzo<br>verb 3<br>我们只需要以上项目每行一个。<br>第七步、测试排错<br>启动vps上的openvpn服务<br>Service openvpn start<br>Oh，不幸的是出现service start failed！！！<br>但是当你运行：<br>Openvpn /etc/openvpn/server.conf<br>又可以运行，解决办法：<br>删除/etc/openvpn/下的ipp.txt openvpn-status.log<br>然后就可以启动服务了。如果你还不能解决，那就去var/log中找message慢慢分析原因</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/31/elasticsearch-searchguard/" rel="next" title="elasticsearch-searchguard">
+                <i class="fa fa-chevron-left"></i> elasticsearch-searchguard
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/03/elasticsearch聚合统计/" rel="prev" title="elasticsearch聚合统计">
+                elasticsearch聚合统计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">laugh</p>
+              <p class="site-description motion-element" itemprop="description">lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一步、为vps安装openvpn及所有所需软件"><span class="nav-number">1.</span> <span class="nav-text">第一步、为vps安装openvpn及所有所需软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步、编辑vars文件，根据自己环境配置"><span class="nav-number">2.</span> <span class="nav-text">第二步、编辑vars文件，根据自己环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步、创建服务端证书及key"><span class="nav-number">3.</span> <span class="nav-text">第三步、创建服务端证书及key</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">laugh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

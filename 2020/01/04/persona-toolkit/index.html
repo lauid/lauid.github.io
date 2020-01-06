@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="pt-table-sync 使用对两个库不一致的数据进行同步，他能够自动发现两个实例间不一致的数据，然后进行sync操作， pt-table-sync无法同步表结构，和索引等对象，只能同步数据。 可能大家多数使用该工具来解决主从数据不一致的问题，其实他的功能不止于此，也可以用来对两个不在一个主从拓扑实例，进行数据sync。  NOTE1:如果是sync主从数据，只有当需要sync的表都有唯一键(主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="persona-toolkit">
+<meta property="og:url" content="http://liugaohua.github.io/2020/01/04/persona-toolkit/index.html">
+<meta property="og:site_name" content="Runnable">
+<meta property="og:description" content="pt-table-sync 使用对两个库不一致的数据进行同步，他能够自动发现两个实例间不一致的数据，然后进行sync操作， pt-table-sync无法同步表结构，和索引等对象，只能同步数据。 可能大家多数使用该工具来解决主从数据不一致的问题，其实他的功能不止于此，也可以用来对两个不在一个主从拓扑实例，进行数据sync。  NOTE1:如果是sync主从数据，只有当需要sync的表都有唯一键(主">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-01-06T01:08:02.849Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="persona-toolkit">
+<meta name="twitter:description" content="pt-table-sync 使用对两个库不一致的数据进行同步，他能够自动发现两个实例间不一致的数据，然后进行sync操作， pt-table-sync无法同步表结构，和索引等对象，只能同步数据。 可能大家多数使用该工具来解决主从数据不一致的问题，其实他的功能不止于此，也可以用来对两个不在一个主从拓扑实例，进行数据sync。  NOTE1:如果是sync主从数据，只有当需要sync的表都有唯一键(主">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://liugaohua.github.io/2020/01/04/persona-toolkit/">
+
+
+
+
+
+  <title>persona-toolkit | Runnable</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6a35fff8f36aebd9be09e2be88ef1e09";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Runnable</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">strong to refuse</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/01/04/persona-toolkit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">persona-toolkit</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-04T13:42:59+08:00">
+                2020-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="pt-table-sync"><a href="#pt-table-sync" class="headerlink" title="pt-table-sync"></a>pt-table-sync</h3><ul>
+<li>使用对两个库不一致的数据进行同步，他能够自动发现两个实例间不一致的数据，然后进行sync操作，</li>
+<li>pt-table-sync无法同步表结构，和索引等对象，只能同步数据。</li>
+<li>可能大家多数使用该工具来解决主从数据不一致的问题，其实他的功能不止于此，也可以用来对两个不在一个主从拓扑实例，进行数据sync。</li>
+</ul>
+<p>NOTE1:<br>如果是sync主从数据，只有当需要sync的表都有唯一键(主键或唯一索引)，才能使用–sync-to-master and/or –replicate。<br>(没有唯一键，则只能在desitination上直接修改，而指定–sync-to-master and/or –replicate时只能在主库上修改)，<br>如果sync主从时没有指定–replicate或者–sync-to-master则所有修改都在从库上执行(不论表上是否有唯一键)</p>
+<a id="more"></a>
+<h4 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h4><h4 id="sync两个独立数据库-非主从"><a href="#sync两个独立数据库-非主从" class="headerlink" title="sync两个独立数据库(非主从)"></a>sync两个独立数据库(非主从)</h4><p>以75为source，76为desitination，</p>
+<p>1)同步所有的库和表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pt-table-sync --charset=utf8 --ignore-databases=mysql,sys,percona u=root,p=root,h=172.172.178.75,P=3306 u=root,p=root,h=172.172.178.76,P=3306 --execute --print</span><br></pre></td></tr></table></figure></p>
+<p>2) 同步指定库或者指定表</p>
+<p>只对指定的库进行sync</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pt-table-sync --charset=utf8 --ignore-databases=mysql,sys,percona --databases=test1 --no-check-slave u=root,p=root,h=172.172.178.75,P=3306 u=root,p=root,h=172.172.178.76,P=3306 --execute --print</span><br></pre></td></tr></table></figure>
+<p>只对指定的表进行sync(也可以–tables=test5.test_nu)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pt-table-sync --charset=utf8--ignore-databases=mysql,sys,percona --databases=test5 --tables=test_nu --no-check-slave dsn=u=root,p=root,h=172.172.178.75,P=3306 dsn=u=root,p=root,h=172.172.178.76,P=3306 --execute --print</span><br></pre></td></tr></table></figure>
+<p>1)忽略某些库或者忽略某些表</p>
+<p>忽略库</p>
+<p>–ignore-databases=指定要忽略的库</p>
+<p>忽略表</p>
+<p>pt-table-sync –charset=utf8–ignore-databases=mysql,sys,percona –ignore-tables=test5.test_nu –no-check-slave dsn=u=root,p=root,h=172.172.178.75,P=3306 dsn=u=root,p=root,h=172.172.178.76,P=3306 –execute –print</p>
+<h4 id="sync主从数据"><a href="#sync主从数据" class="headerlink" title="sync主从数据"></a>sync主从数据</h4><p>1)没有唯一键(主键或唯一索引)</p>
+<p>pt-table-sync –charset=utf8–ignore-databases=mysql,sys,percona –no-check-slave dsn=u=root,p=root,h=172.172.178.75,P=3306 dsn=u=root,p=root,h=172.172.178.76,P=3306 –execute –print</p>
+<p>##只比对76同75的数据，对差异数据进行sync</p>
+<p>可以指定多个从库</p>
+<p>pt-table-sync –charset=utf8–ignore-databases=mysql,sys,percona –no-check-slave dsn=u=root,p=root,h=172.172.178.75,P=3306 dsn=u=root,p=root,h=172.172.178.76,P=3306 dsn=u=root,p=root,h=172.172.178.77,P=3306 –execute –print</p>
+<p>##比对76同75；77同75的数据，对差异进行sync</p>
+<p>NOTE1:在执行sync之前，我们可以指定—print(不要指定–execute)来查看pt-table-sync会进行哪些修改</p>
+<p>NOTE2:执行sync操作时,指定忽略mysql等系统数据库(information_schema,performance_schema会自动被忽略)</p>
+<p>NOTE3:指定–no-check-slave不检查desitination是否为从库，否则报如下错误:</p>
+<p>Can’t make changes onA=utf8,P=3306,h=172.172.178.76,p=… because it’s a slave. See thedocumentation section ‘REPLICATION SAFETY’</p>
+<p>NOTE4:此种情况下修改都在从库上进行(不论表是否有唯一键)</p>
+<p>2) 有唯一键(有唯一键时，可以使用–sync-to-master and/or –replicate进行主从sync)</p>
+<p>pt-table-sync –execute –sync-to-master–charset=utf8 –ignore-databases=mysql,sys,percona –no-check-slave dsn=u=root,p=root,h=172.172.178.76,P=3306 –print</p>
+<p>NOTE1:在执行sync之前，我们可以指定–print来查看pt-table-sync会进行哪些修改</p>
+<p>NOTE2:执行sync操作时,指定忽略mysql等系统数据库(information_schema,performance_schema会自动被忽略)</p>
+<p>NOTE3:如果表上没有唯一索引,则无法在主库执行replace操作，会报如下错此种情况不能指定–replicate或者–sync-to-master</p>
+<p> Can’tmake changes on the master because no unique index exists at/usr/bin/pt-table-sync line 10663.  whiledoing test1.test_concat on 172.172.178.76</p>
+<p>NOTE4:指定了–replicate(指定dsn为主)或者–sync-to-master(指定dsn为从)只能为命令行指定一个dsn</p>
+<p>参考<br><a href="https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html" target="_blank" rel="noopener">https://www.percona.com/doc/percona-toolkit/LATEST/pt-table-sync.html</a><br><a href="https://www.hellojava.com/a/75316.html" target="_blank" rel="noopener">https://www.hellojava.com/a/75316.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/04/ubuntu-install-golang/" rel="next" title="ubuntu-install-golang">
+                <i class="fa fa-chevron-left"></i> ubuntu-install-golang
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/04/jira破解安装/" rel="prev" title="jira破解安装">
+                jira破解安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">laugh</p>
+              <p class="site-description motion-element" itemprop="description">lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#pt-table-sync"><span class="nav-number">1.</span> <span class="nav-text">pt-table-sync</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用示例"><span class="nav-number">1.1.</span> <span class="nav-text">使用示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sync两个独立数据库-非主从"><span class="nav-number">1.2.</span> <span class="nav-text">sync两个独立数据库(非主从)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sync主从数据"><span class="nav-number">1.3.</span> <span class="nav-text">sync主从数据</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">laugh</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

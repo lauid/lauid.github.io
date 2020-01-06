@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Runnable">
 <meta property="og:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-31T06:45:59.221Z">
+<meta property="og:updated_time" content="2020-01-04T08:56:19.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="small-case">
 <meta name="twitter:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
@@ -341,6 +341,12 @@
 <p>安装trash-cli工具，其实就是回收站的命令行模式：</p>
 <p>sudo apt-get install trash-cli</p>
 <p>如果是centos系统<br>sudo yum install -y trash-cli</p>
+<h4 id="yum之后查看安装包安装了那些东西"><a href="#yum之后查看安装包安装了那些东西" class="headerlink" title="yum之后查看安装包安装了那些东西"></a>yum之后查看安装包安装了那些东西</h4><p>rpm -ql openvpn</p>
+<h4 id="deb安装到指定目录"><a href="#deb安装到指定目录" class="headerlink" title="deb安装到指定目录"></a>deb安装到指定目录</h4><p>有时候，我们没有root用户的时候，我们进行安装deb包就不能之间安装到系统之中了；</p>
+<p>为了方便，我们可以直接解压 dpkg -x same.deb .;</p>
+<p>直接解压到当前目录，然后在配置环境变量，即可启动运行程序；</p>
+<p>当然，还有另外一个命令：</p>
+<p>dpkg -i –instdir=/dest/dir/path some.deb</p>
 
       
     </div>
@@ -371,8 +377,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/28/elasticserach-install/" rel="next" title="elasticsearch-install">
-                <i class="fa fa-chevron-left"></i> elasticsearch-install
+              <a href="/2019/12/04/elasticsearch-常用/" rel="next" title="elasticsearch-常用">
+                <i class="fa fa-chevron-left"></i> elasticsearch-常用
               </a>
             
           </div>
@@ -381,8 +387,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/28/nginx-logstash/" rel="prev" title="nginx-logstash">
-                nginx-logstash <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/28/elasticserach-install/" rel="prev" title="elasticsearch-install">
+                elasticsearch-install <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -460,7 +466,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">51</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -482,7 +488,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -515,7 +521,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum之后查看安装包安装了那些东西"><span class="nav-number">2.7.</span> <span class="nav-text">yum之后查看安装包安装了那些东西</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deb安装到指定目录"><span class="nav-number">2.8.</span> <span class="nav-text">deb安装到指定目录</span></a></li></ol></li></ol></div>
             
 
           </div>
