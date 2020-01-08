@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Runnable">
 <meta property="og:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-04T08:56:19.234Z">
+<meta property="og:updated_time" content="2020-01-07T08:26:03.711Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="small-case">
 <meta name="twitter:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
@@ -347,6 +347,11 @@
 <p>直接解压到当前目录，然后在配置环境变量，即可启动运行程序；</p>
 <p>当然，还有另外一个命令：</p>
 <p>dpkg -i –instdir=/dest/dir/path some.deb</p>
+<h4 id="查找linux下进程占用CPU过高的原因"><a href="#查找linux下进程占用CPU过高的原因" class="headerlink" title="查找linux下进程占用CPU过高的原因"></a>查找linux下进程占用CPU过高的原因</h4><ul>
+<li>找出占用CPU最高的10个进程<br>ps aux | sort -k3nr | head -n 10</li>
+<li>或查看占用内存最高的10个进程<br>ps aux | sort -k4nr | head -n 10　　</li>
+</ul>
+<h4 id="生成pem格式的create-RSA-private-key"><a href="#生成pem格式的create-RSA-private-key" class="headerlink" title="生成pem格式的create RSA private key"></a>生成pem格式的create RSA private key</h4><p>ssh-keygen -m PEM -t rsa -b 4096 -C “<a href="mailto:your_email@example.com" target="_blank" rel="noopener">your_email@example.com</a>“</p>
 
       
     </div>
@@ -521,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum之后查看安装包安装了那些东西"><span class="nav-number">2.7.</span> <span class="nav-text">yum之后查看安装包安装了那些东西</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deb安装到指定目录"><span class="nav-number">2.8.</span> <span class="nav-text">deb安装到指定目录</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum之后查看安装包安装了那些东西"><span class="nav-number">2.7.</span> <span class="nav-text">yum之后查看安装包安装了那些东西</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deb安装到指定目录"><span class="nav-number">2.8.</span> <span class="nav-text">deb安装到指定目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找linux下进程占用CPU过高的原因"><span class="nav-number">2.9.</span> <span class="nav-text">查找linux下进程占用CPU过高的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成pem格式的create-RSA-private-key"><span class="nav-number">2.10.</span> <span class="nav-text">生成pem格式的create RSA private key</span></a></li></ol></li></ol></div>
             
 
           </div>
