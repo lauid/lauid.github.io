@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Runnable">
 <meta property="og:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-01-07T08:26:03.711Z">
+<meta property="og:updated_time" content="2020-03-13T01:19:35.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="small-case">
 <meta name="twitter:description" content="查看服务端口ss -talnss -ltp-l = listen, -t = tcp, -p = show program name ssh相关文件权限配置chmod 700 -R .ssh #设置.ssh目录权限 chmod 600. ssh/authorized_keys chmod 400 私钥 使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式">
@@ -327,6 +327,7 @@
 <p>使用 ssh-keygen -m PEM 将 OpenSSH 密钥转换为 PEM 格式</p>
 <a id="more"></a>
 <h4 id="根据私钥读取公钥"><a href="#根据私钥读取公钥" class="headerlink" title="根据私钥读取公钥"></a>根据私钥读取公钥</h4><p>sh-keygen -y -f &lt;path/to/private_key&gt; &gt; &lt;path/to/public_key&gt;<br>-y Read private key file and print public key<br>-y 的意思是读取私钥并将公钥打印出来</p>
+<h4 id="生成pem格式的create-RSA-private-key"><a href="#生成pem格式的create-RSA-private-key" class="headerlink" title="生成pem格式的create RSA private key"></a>生成pem格式的create RSA private key</h4><p>ssh-keygen -m PEM -t rsa -b 4096 -C “<a href="mailto:dep1@example.com" target="_blank" rel="noopener">dep1@example.com</a>“ -f dep1.pem</p>
 <h4 id="用户相关"><a href="#用户相关" class="headerlink" title="用户相关"></a>用户相关</h4><p>修改用户sh<br>usermod -s /bin/bash kaifa</p>
 <ul>
 <li>/bin/false什么也不做只是返回一个错误状态,然后立即退出。将用户的shell设置为/bin/false,用户会无法登录,并且不会有任何提示。</li>
@@ -351,7 +352,6 @@
 <li>找出占用CPU最高的10个进程<br>ps aux | sort -k3nr | head -n 10</li>
 <li>或查看占用内存最高的10个进程<br>ps aux | sort -k4nr | head -n 10　　</li>
 </ul>
-<h4 id="生成pem格式的create-RSA-private-key"><a href="#生成pem格式的create-RSA-private-key" class="headerlink" title="生成pem格式的create RSA private key"></a>生成pem格式的create RSA private key</h4><p>ssh-keygen -m PEM -t rsa -b 4096 -C “<a href="mailto:your_email@example.com" target="_blank" rel="noopener">your_email@example.com</a>“</p>
 
       
     </div>
@@ -382,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/12/04/elasticsearch-常用/" rel="next" title="elasticsearch-常用">
-                <i class="fa fa-chevron-left"></i> elasticsearch-常用
+              <a href="/2019/12/28/elasticserach-install/" rel="next" title="elasticsearch-install">
+                <i class="fa fa-chevron-left"></i> elasticsearch-install
               </a>
             
           </div>
@@ -392,8 +392,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/12/28/elasticserach-install/" rel="prev" title="elasticsearch-install">
-                elasticsearch-install <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/28/nginx-logstash/" rel="prev" title="nginx-logstash">
+                nginx-logstash <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -471,7 +471,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -493,7 +493,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -526,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.2.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.3.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.4.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.5.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.6.</span> <span class="nav-text">回收站工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum之后查看安装包安装了那些东西"><span class="nav-number">2.7.</span> <span class="nav-text">yum之后查看安装包安装了那些东西</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deb安装到指定目录"><span class="nav-number">2.8.</span> <span class="nav-text">deb安装到指定目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找linux下进程占用CPU过高的原因"><span class="nav-number">2.9.</span> <span class="nav-text">查找linux下进程占用CPU过高的原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成pem格式的create-RSA-private-key"><span class="nav-number">2.10.</span> <span class="nav-text">生成pem格式的create RSA private key</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看服务端口"><span class="nav-number">1.</span> <span class="nav-text">查看服务端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh相关文件权限配置"><span class="nav-number">2.</span> <span class="nav-text">ssh相关文件权限配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#根据私钥读取公钥"><span class="nav-number">2.1.</span> <span class="nav-text">根据私钥读取公钥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成pem格式的create-RSA-private-key"><span class="nav-number">2.2.</span> <span class="nav-text">生成pem格式的create RSA private key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户相关"><span class="nav-number">2.3.</span> <span class="nav-text">用户相关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机密码生成"><span class="nav-number">2.4.</span> <span class="nav-text">随机密码生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#visudo修改编辑器vim"><span class="nav-number">2.5.</span> <span class="nav-text">visudo修改编辑器vim</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nologin用户"><span class="nav-number">2.6.</span> <span class="nav-text">nologin用户</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收站工具"><span class="nav-number">2.7.</span> <span class="nav-text">回收站工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yum之后查看安装包安装了那些东西"><span class="nav-number">2.8.</span> <span class="nav-text">yum之后查看安装包安装了那些东西</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deb安装到指定目录"><span class="nav-number">2.9.</span> <span class="nav-text">deb安装到指定目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找linux下进程占用CPU过高的原因"><span class="nav-number">2.10.</span> <span class="nav-text">查找linux下进程占用CPU过高的原因</span></a></li></ol></li></ol></div>
             
 
           </div>
