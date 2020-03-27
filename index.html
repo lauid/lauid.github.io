@@ -252,6 +252,610 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/03/25/mysql-information-schema-tables字段说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/25/mysql-information-schema-tables字段说明/" itemprop="url">mysql.information_schema.tables字段说明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T14:25:19+08:00">
+                2020-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>information_schema.tables字段说明</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table_catalog</td>
+<td>数据表登记目录</td>
+</tr>
+<tr>
+<td>Table_schema</td>
+<td>数据表所属的数据库名</td>
+</tr>
+<tr>
+<td>Table_name</td>
+<td>表名称</td>
+</tr>
+<tr>
+<td>Table_type</td>
+<td>表类型,system view,base table</td>
+</tr>
+<tr>
+<td>Engine</td>
+<td>使用的数据库引擎,MyISAM,CSV,InnoDB</td>
+</tr>
+<tr>
+<td>Version</td>
+<td>版本，默认值10</td>
+</tr>
+<tr>
+<td>Row_format</td>
+<td>行格式Compact,Dynamic,Fixed</td>
+</tr>
+<tr>
+<td>Table_rows</td>
+<td>表里所存多少行数据</td>
+</tr>
+<tr>
+<td>Avg_row_length</td>
+<td>平均行长度</td>
+</tr>
+<tr>
+<td>Data_length</td>
+<td>数据长度</td>
+</tr>
+<tr>
+<td>Max_data_length</td>
+<td>最大数据长度</td>
+</tr>
+<tr>
+<td>Index_length</td>
+<td>索引长度</td>
+</tr>
+<tr>
+<td>Data_free</td>
+<td>空间碎片</td>
+</tr>
+<tr>
+<td>Auto_increment</td>
+<td>做自增主键的自动增量当前值</td>
+</tr>
+<tr>
+<td>Create_time</td>
+<td>表的创建时间</td>
+</tr>
+<tr>
+<td>Update_time</td>
+<td>表的更新时间</td>
+</tr>
+<tr>
+<td>Check_time</td>
+<td>表的检查时间</td>
+</tr>
+<tr>
+<td>Table_collation</td>
+<td>表的字符校验编码集</td>
+</tr>
+<tr>
+<td>Checksum</td>
+<td>校验和</td>
+</tr>
+<tr>
+<td>Create_options</td>
+<td>创建选项</td>
+</tr>
+<tr>
+<td>Table_comment</td>
+<td>表的注释、备注</td>
+</tr>
+</tbody>
+</table>
+<p>1、use information_schema;<br>2、select table_name,table_rows,ENGINE,table_type,Avg_row_length,Data_length,Max_data_length,Index_length,Data_free from tables where TABLE_SCHEMA = ‘databasename’ order by table_rows desc;  </p>
+<p>//碎片整理<br>OPTIMIZE TABLE tablename</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/03/25/mysql区分大小写问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/25/mysql区分大小写问题/" itemprop="url">mysql区分大小写问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-25T12:36:10+08:00">
+                2020-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>mysql字符串区分大小写的问题</p>
+<h3 id="一、"><a href="#一、" class="headerlink" title="一、"></a>一、</h3><h5 id="1、-CREATE-TABLE-NAME-name-VARCHAR-10"><a href="#1、-CREATE-TABLE-NAME-name-VARCHAR-10" class="headerlink" title="1、 CREATE TABLE NAME(name VARCHAR(10));"></a>1、 CREATE TABLE NAME(name VARCHAR(10));</h5><p>对这个表，缺省情况下，下面两个查询的结果是一样的：</p>
+<p>SELECT * FROM TABLE NAME WHERE name=’clip’;</p>
+<p>SELECT * FROM TABLE NAME WHERE name=’Clip’;</p>
+<blockquote>
+<p>MySql默认查询是不区分大小写的,如果需要区分他,必须在建表的时候,Binary标示敏感的属性.</p>
+</blockquote>
+<p>CREATE TABLE NAME( name VARCHAR(10) BINARY);</p>
+<h4 id="2、-在SQL语句中实现-SELECT-FROM-TABLE-NAME-WHERE-BINARY-name-’Clip’"><a href="#2、-在SQL语句中实现-SELECT-FROM-TABLE-NAME-WHERE-BINARY-name-’Clip’" class="headerlink" title="2、 在SQL语句中实现 SELECT * FROM TABLE NAME WHERE BINARY name=’Clip’;"></a>2、 在SQL语句中实现 SELECT * FROM TABLE NAME WHERE BINARY name=’Clip’;</h4><p>推荐使用</p>
+<p>select * from pet where name = binary ‘whistler’;<br>这样可以保证当前字段的索引依然有效，而</p>
+<p>select * from pet where binary name = ‘whistler’;<br>会使索引失效。</p>
+<h4 id="3、-设置字符集："><a href="#3、-设置字符集：" class="headerlink" title="3、 设置字符集："></a>3、 设置字符集：</h4><p>utf8_general_ci –不区分大小写</p>
+<p>utf8_bin–区分大小写</p>
+<p>二、 MySQL在windows下是不区分大小写的，将script文件导入MySQL后表名也会自动转化为小写，结果再 想要将数据库导出放到linux服务器中使用时就出错了。<br>因为在linux下表名区分大小写而找不到表，查了很多都是说在linux下更改MySQL的设置使其也不区分大小写，但是有没有办法反过来让windows 下大小写敏感呢。<br>其实方法是一样的，相应的更改windows中MySQL的设置就行了。</p>
+<p>具体操作：</p>
+<p>在MySQL的配置文件my.ini中增加一行：</p>
+<p>lower_case_table_names = 0</p>
+<p>其中 0：区分大小写，1：不区分大小写</p>
+<p>MySQL在Linux下数据库名、表名、列名、别名大小写规则是这样的：</p>
+<p>1、数据库名与表名是严格区分大小写的；</p>
+<p>2、表的别名是严格区分大小写的；</p>
+<p>3、列名与列的别名在所有的情况下均是忽略大小写的；</p>
+<p>4、变量名也是严格区分大小写的； MySQL在Windows下都不区分大小写</p>
+<p><a href="http://www.jb51.net/article/61591.htm" target="_blank" rel="noopener">http://www.jb51.net/article/61591.htm</a></p>
+<p>当我们输入不管大小写都能查询到数据，例如：输入 aaa 或者aaA ,AAA都能查询同样的结果，说明查询条件对大小写不敏感。<br>解决方案一：<br>于是怀疑Mysql的问题。做个实验：直接使用客户端用sql查询数据库。 发现的确是大小不敏感 。<br>通过查询资料发现需要设置collate（校对） 。 collate规则：<br><em>_bin: 表示的是binary case sensitive collation，也就是说是区分大小写的
+</em>_cs: case sensitive collation，区分大小写<br>*_ci: case insensitive collation，不区分大小写</p>
+<p>解决方法一：<br>1.可以将查询条件用binary()括起来。 比如：<br>select * from TableA where binary columnA =’aaa’;</p>
+<ol start="2">
+<li>可以修改该字段的collation 为 binary<br>比如：<br>ALTER TABLE TABLENAME MODIFY COLUMN COLUMNNAME VARCHAR(50) BINARY CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL;</li>
+</ol>
+<p>解决方案二：<br>mysql查询默认是不区分大小写的 如:<br>select <em> from some_table where str=‘abc’;<br>select </em> from some_table where str=’ABC’;<br>得到的结果是一样的，如果我们需要进行区分的话可以按照如下方法来做：<br>第一种方法：<br>要让mysql查询区分大小写，可以：<br>select <em> from some_table where binary str=’abc’<br>select </em> from some_table where binary str=’ABC’<br>第二种方法：<br>在建表时时候加以标识<br>create table some_table(<br>str char(20) binary<br>)<br>原理：<br>对于CHAR、VARCHAR和TEXT类型，BINARY属性可以为列分配该列字符集的 校对规则。<br>BINARY属性是指定列字符集的二元 校对规则的简写。<br>排序和比较基于数值字符值。因此也就自然区分了大小写。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/03/18/nginx-lua页面静态化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/18/nginx-lua页面静态化/" itemprop="url">nginx.lua页面静态化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-18T12:16:44+08:00">
+                2020-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/03/18/gitlab迁移/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="laugh">
+      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Runnable">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/18/gitlab迁移/" itemprop="url">gitlab迁移</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-18T12:16:18+08:00">
+                2020-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2020/03/13/SQL优化器soar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1000,509 +1604,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/31/elasticsearch-searchguard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/31/elasticsearch-searchguard/" itemprop="url">elasticsearch-searchguard</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-31T16:15:45+08:00">
-                2019-12-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/31/elasticsearch参数详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/31/elasticsearch参数详解/" itemprop="url">elasticsearch参数详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-31T13:50:50+08:00">
-                2019-12-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>cluster.name: elasticsearch</p>
-<blockquote>
-<p>配置的集群名称，默认是elasticsearch，es服务会通过广播方式自动连接在同一网段下的es服务，通过多播方式进行通信，同一网段下可以有多个集群，通过集群名称这个属性来区分不同的集群。</p>
-</blockquote>
-<p>node.name: “Franz Kafka”</p>
-<blockquote>
-<p>当前配置所在机器的节点名，你不设置就默认随机指定一个name列表中名字，该name列表在es的jar包中config文件夹里name.txt文件中，其中有很多作者添加的有趣名字。</p>
-</blockquote>
-<p>node.master: true</p>
-<blockquote>
-<p>指定该节点是否有资格被选举成为node（注意这里只是设置成有资格， 不代表该node一定就是master），默认是true，es是默认集群中的第一台机器为master，如果这台机挂了就会重新选举master。</p>
-</blockquote>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/12/31/elasticsearch参数详解/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/nginx生成请求id/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/28/nginx生成请求id/" itemprop="url">nginx生成请求id</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T17:10:01+08:00">
-                2019-12-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://liugaohua.github.io/2019/12/28/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="laugh">
-      <meta itemprop="description" content="lanmp, ELK, go, python, vue, 分布式, k8s, docker, CI/CD">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Runnable">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/28/nginx/" itemprop="url">nginx常用配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-28T17:07:55+08:00">
-                2019-12-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>语法<br>location的语法规则：location [=|~|~*|^~] /uri/ { … }<br>location匹配的变量是$uri<br>关于几种字符的说明</p>
-<p>字符    描述<br>=    表示精准匹配<br>~    表示区分大小写的正则匹配<br>~<em>    表示不区分大小写的正则匹配<br>^~    表示uri以指定字符或字符串开头<br>/    通用匹配，任何请求都会匹配到规则优先级<br>= 高于 ^~ 高于 ~</em> 等于 ~ 高于 /</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/12/28/nginx/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1548,7 +1654,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
