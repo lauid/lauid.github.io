@@ -931,7 +931,39 @@
       
         
           
-            
+            <h4 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h4><p>备份时需要保持gitlab处于正常运行状态，直接执行 <strong>gitlab-rake gitlab:backup:create</strong> 进行备份</p>
+<p>使用以上命令会在 <strong>/var/opt/gitlab/backups</strong> 目录下创建一个名称类似为1584426664_gitlab_backup.tar或者1530156812_2018_06_28_10.8.4_gitlab_backup.tar的压缩包</p>
+<p>留意关键配置</p>
+<blockquote>
+<p>/etc/gitlab/gitlab.rb 配置文件须备份<br>/var/opt/gitlab/nginx/conf nginx配置文件<br>/etc/postfix/main.cf postfix 邮件配置备份<br>gitlab_rails[‘backup_path’] = “/var/opt/gitlab/backups”</p>
+</blockquote>
+<h4 id="gitlab恢复"><a href="#gitlab恢复" class="headerlink" title="gitlab恢复"></a>gitlab恢复</h4><ul>
+<li><p>拷贝</p>
+<blockquote>
+<p>scp <a href="mailto:root@44.88.11.22" target="_blank" rel="noopener">root@44.88.11.22</a>:/var/opt/gitlab/backups/1584426664_gitlab_backup.tar .</p>
+</blockquote>
+</li>
+<li><p>停止相关数据连接服务</p>
+<blockquote>
+<p>[root@gitlab ~]# gitlab-ctl stop unicorn<br>[root@gitlab ~]# gitlab-ctl stop sidekiq</p>
+</blockquote>
+</li>
+<li><p>恢复</p>
+<blockquote>
+<p>ls /var/opt/gitlab/backups<br>[root@gitlab ~]# gitlab-rake gitlab:backup:restore BACKUP=1584426664<br>从1530156812_2018_06_28_10.8.4编号备份中恢复<br>按照提示输入两次yes并回车<br>修改权限</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="启动gitlab"><a href="#启动gitlab" class="headerlink" title="启动gitlab"></a>启动gitlab</h4><blockquote>
+<p>[root@gitlab ~]# gitlab-ctl start                </p>
+</blockquote>
+<h4 id="修改域名配置"><a href="#修改域名配置" class="headerlink" title="修改域名配置"></a>修改域名配置</h4><blockquote>
+<p>vim /etc/gitlab/gitlab.rb<br>external_url ‘<a href="http://gitlab.exx.cn/&#39;" target="_blank" rel="noopener">http://gitlab.exx.cn/&#39;</a></p>
+<p>vim nginx/gitlab.conf</p>
+<p>gitlab-ctl reconfigure &amp;&amp; gitlab-ctl start</p>
+</blockquote>
+<h4 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h4><p>浏览器访问新服务器的地址进行查看，迁移成功</p>
+
           
         
       
